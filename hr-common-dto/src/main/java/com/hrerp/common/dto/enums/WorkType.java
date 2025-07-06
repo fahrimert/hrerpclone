@@ -1,0 +1,20 @@
+package com.hrerpclone.common.dto.enums;
+
+public enum WorkType {
+    OFFICE(
+            "OFFICE"
+    ),
+    REMOTE(
+            "REMOTE"
+    ),
+    HYBRID(
+      "HYBRID"
+    );
+
+    private  final String workTypeName;
+
+
+    WorkType(String workTypeName) {
+        this.workTypeName = workTypeName;
+    }
+}
