@@ -26,8 +26,10 @@ public class CandidateRequestDTO {
 
     private Address address;
     private  String email;
-    private Connections connections;
-
+    private  String linkedin_url;
+    private  String instagram_url;
+    private  String facebook_url;
+    private  String phoneNumber;
     private  String cvUrl;
 
     private LocalDateTime createdAt = LocalDateTime.now();

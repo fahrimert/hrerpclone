@@ -1,21 +1,21 @@
 package com.hrerp.candidatems.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.hrerp.candidatems.model.ApplicationStatus;
+import com.hrerp.candidatems.model.Candidate;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Data
+@Getter
 @AllArgsConstructor
-@NoArgsConstructor
-public class ApplicationRequestDTO {
-    private  Long id;
+public class ApplicationResponseDTO {
+    private  Long applicationId;
     private LocalDate applicationDate;
     private  String appliedPosition;
     private String coverLetter;
-    private  String applicationStatusName;
-    private Long candidateId;
+    private ApplicationStatus applicationStatusName;
+    private Candidate candidate;
 
 
 }

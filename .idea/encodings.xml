@@ -3,6 +3,18 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/../candidatems/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/candidatems/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hr-common-dto/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hr-common-dto/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jobms/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jobms/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/recruitmentms/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/recruitmentms/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/recruitmentmsfinal/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/recruitmentmsfinal/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/recruitmentmss/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/recruitmentmss/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-registry/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-registry/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
   </component>
 </project>

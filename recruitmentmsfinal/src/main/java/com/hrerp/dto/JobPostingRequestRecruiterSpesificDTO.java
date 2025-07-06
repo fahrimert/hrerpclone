@@ -1,17 +1,15 @@
 package com.hrerp.dto;
 
-import com.hrerp.dto.enums.JobStatus;
-import com.hrerp.dto.enums.JobType;
-import com.hrerp.dto.enums.Location;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 
 @Data

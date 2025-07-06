@@ -1,11 +1,12 @@
-package com.hrerpclone.service;
+package com.hrerp.candidatems.service;
 
-import com.hrerpclone.dto.ApiResponse;
-import com.hrerpclone.dto.JobPostingRequestDTO;
-import com.hrerpclone.dto.JobPostingResponseDTO;
-import com.hrerpclone.mapper.JobPostingMapper;
-import com.hrerpclone.model.JobPosting;
-import com.hrerpclone.repository.JobPostingRepository;
+import com.hrerp.candidatems.dto.ApiResponse;
+import com.hrerp.candidatems.dto.CandidateRequestDTO;
+import com.hrerp.candidatems.dto.CandidateResponseDTO;
+import com.hrerp.candidatems.mapper.CandidateMapper;
+import com.hrerp.candidatems.model.Candidate;
+import com.hrerp.candidatems.model.Connections;
+import com.hrerp.candidatems.repository.CandidateRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,59 +20,83 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class JobPostingService implements  JobPostingServiceImpl{
+public class CandidateService implements CandidateServiceImpl {
 
-    private  final JobPostingRepository jobPostingRepository;
-    private  final JobPostingMapper jobPostingMapper;
-    public JobPostingService(JobPostingRepository jobPostingRepository, JobPostingMapper jobPostingMapper) {
-        this.jobPostingRepository = jobPostingRepository;
-        this.jobPostingMapper = jobPostingMapper;
+    private  final CandidateRepository candidateRepository;
+    private  final CandidateMapper candidateMapper;
+
+    public CandidateService(CandidateRepository candidateRepository, CandidateMapper candidateMapper) {
+        this.candidateRepository = candidateRepository;
+        this.candidateMapper = candidateMapper;
     }
 
-    public ResponseEntity<List<JobPostingResponseDTO>> findAllJobPostings() {
-        return  ResponseEntity.ok(jobPostingRepository.findAll()
+
+    public ResponseEntity<List<CandidateResponseDTO>> findAllCandidates() {
+        return  ResponseEntity.ok(candidateRepository.findAll()
                 .stream()
-                .map(jobPostingMapper::fromJobPosting)
+                .map(candidateMapper::fromCandidate)
                 .collect(Collectors.toList()));
     }
 
     @Transactional
-    public ResponseEntity<ApiResponse> createJobPosting(@Valid JobPostingRequestDTO jobPostingRequestDTO) {
-        JobPosting jobPosting =jobPostingMapper.toJobPosting(jobPostingRequestDTO);
-        jobPostingRepository.save(jobPosting);
+    public ResponseEntity<ApiResponse> createCandidate(@Valid CandidateRequestDTO candidateRequestDTO) {
+        Candidate candidate =candidateMapper.toCandidate(candidateRequestDTO);
+        candidateRepository.save(candidate);
 return  ResponseEntity.status(HttpStatus.ACCEPTED)
-        .body(ApiResponse.success(jobPosting.getJobTitle()));
+        .body(ApiResponse.success(candidate.getFirstName()));
     }
 
     @Override
-    public ResponseEntity<JobPostingResponseDTO> findJobById(Long id) {
-   return  ResponseEntity.ok(jobPostingMapper.fromJobPosting( jobPostingRepository.findById(id).orElse(null)));
+    public ResponseEntity<CandidateResponseDTO> findCandidateById(Long id) {
+   return  ResponseEntity.ok(candidateMapper.fromCandidate( candidateRepository.findById(id).orElse(null)));
 
     }
 
     @Override
-    public ResponseEntity<JobPostingResponseDTO> updateJobById(Long id,JobPostingRequestDTO updatedJobPosting) {
-        JobPosting jobPosting = jobPostingRepository.findById(id).orElse(null);
-         jobPosting.setId(updatedJobPosting.getId());
-         jobPosting.setJobTitle(updatedJobPosting.getJobTitle());
-        jobPosting.setJobPostingDescription(updatedJobPosting.getJobDescription());
-        jobPosting.setSalary(updatedJobPosting.getSalary());
-        jobPosting.setJobType(updatedJobPosting.getJobType());
-        jobPosting.setRequiredSkillsList(updatedJobPosting.getRequiredSkillsList());
-        jobPosting.setDepartment(updatedJobPosting.getDepartment());
-        jobPosting.setLocation(updatedJobPosting.getLocation());
-        jobPosting.setPostingStatus(updatedJobPosting.getJobPostingStatus());
-        jobPosting.setDepartment(updatedJobPosting.getDepartment());
-        jobPosting.setJobPostingDeadline(updatedJobPosting.getJobPostingDeadline());
-        jobPosting.setJobPostingDate(new Date());
+    public ResponseEntity<CandidateResponseDTO> updateCandidateById(Long id,CandidateRequestDTO updatedCandidate) {
+        Candidate candidate = candidateRepository.findById(id).orElse(null);
+         candidate.setFirstName(updatedCandidate.getFirstName());
+        candidate.setAddress(updatedCandidate.getAddress());
+        candidate.setEmail(updatedCandidate.getEmail());
+        candidate.setConnections(
+                Connections.builder()
+                        .linkedinUrl(updatedCandidate.getLinkedin_url())
+                        .instagramUrl(updatedCandidate.getInstagram_url())
+                        .facebookUrl(updatedCandidate.getFacebook_url())
+                        .build());
+        candidate.setCvUrl(updatedCandidate.getCvUrl());
+        candidate.setCreatedAt(updatedCandidate.getCreatedAt());
 
-       ResponseEntity<JobPostingResponseDTO> jobPostingResponse = ResponseEntity.ok( jobPostingMapper.fromJobPosting(jobPosting));
-    return  jobPostingResponse;
+       ResponseEntity<CandidateResponseDTO> candidateResponse =
+               ResponseEntity.ok( candidateMapper.fromCandidate(candidate));
+    return  candidateResponse;
     }
 
     @Override
-    public void deleteJobPosting(Long id) {
-        jobPostingRepository.deleteById(id);
+    public  ResponseEntity<ApiResponse> deleteCandidate(Long id) {
+        Optional<Candidate> jobPosting = candidateRepository.findById(id);
+
+        if (jobPosting.isPresent()){
+
+            candidateRepository.deleteById(id);
+
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(ApiResponse.error(
+                            "Delete candidate succesfully applied",
+                            null,
+                            HttpStatus.CONFLICT
+                    ));
+
+
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(ApiResponse.error(
+                            "Candidate does not exists",
+                            null,
+                            HttpStatus.CONFLICT
+                    ));
+        }
     }
 
 

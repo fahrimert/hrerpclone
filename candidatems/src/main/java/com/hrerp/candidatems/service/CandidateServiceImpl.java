@@ -1,23 +1,23 @@
-package com.hrerpclone.service;
+package com.hrerp.candidatems.service;
 
-import com.hrerpclone.dto.ApiResponse;
-import com.hrerpclone.dto.JobPostingRequestDTO;
-import com.hrerpclone.dto.JobPostingResponseDTO;
-import com.hrerpclone.model.JobPosting;
+import com.hrerp.candidatems.dto.ApiResponse;
+import com.hrerp.candidatems.dto.CandidateRequestDTO;
+import com.hrerp.candidatems.dto.CandidateResponseDTO;
+
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface JobPostingServiceImpl {
+public interface CandidateServiceImpl {
 
-    ResponseEntity<List<JobPostingResponseDTO>> findAllJobPostings();
+    ResponseEntity<List<CandidateResponseDTO>> findAllCandidates();
 
-    ResponseEntity<ApiResponse> createJobPosting(JobPostingRequestDTO jobPostingRequestDTO);
+    ResponseEntity<ApiResponse> createCandidate(CandidateRequestDTO candidateRequestDTO);
 
-    ResponseEntity<JobPostingResponseDTO> findJobById(Long id);
+    ResponseEntity<CandidateResponseDTO> findCandidateById(Long id);
 
-    ResponseEntity<JobPostingResponseDTO> updateJobById(Long id, JobPostingRequestDTO updatedJobPosting);
+    ResponseEntity<CandidateResponseDTO> updateCandidateById(Long id, CandidateRequestDTO updatedCandidate);
 
-    void deleteJobPosting(Long id);
+    ResponseEntity<ApiResponse> deleteCandidate(Long id);
 
 }

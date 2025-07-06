@@ -1,23 +1,24 @@
 package com.hrerp.candidatems.service;
 
-import com.hrerp.candidatems.dto.ApiResponse;
-import com.hrerp.candidatems.dto.CandidateRequestDTO;
-import com.hrerp.candidatems.dto.CandidateResponseDTO;
-
+import com.hrerp.candidatems.dto.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface CandidateServiceImpl {
+public interface ApplicationServiceImpl {
 
-    ResponseEntity<List<CandidateResponseDTO>> findAllCandidates();
+//    ResponseEntity<List<CandidateResponseDTO>> findAllCandidates();
 
-    ResponseEntity<ApiResponse> createCandidate(CandidateRequestDTO candidateRequestDTO);
+    ResponseEntity<ApiResponse> createApplication(ApplicationRequestDTO applicationRequestDTO,Long jobPostingId);
 
-    ResponseEntity<CandidateResponseDTO> findCandidateById(Long id);
+    ResponseEntity  getApplicationsBasedOnJobId(Long jobPostingId);
 
-    ResponseEntity<CandidateResponseDTO> updateCandidateById(Long id, CandidateRequestDTO updatedCandidate);
-
-    ResponseEntity<ApiResponse> deleteCandidate(Long id);
+    ResponseEntity<ApiResponse<?>> getApplicationBasedOnJobId(Long jobId,Long candidateId);
+//
+//    ResponseEntity<CandidateResponseDTO> findCandidateById(Long id);
+//
+//    ResponseEntity<CandidateResponseDTO> updateCandidateById(Long id, CandidateRequestDTO updatedCandidate);
+//
+//    ResponseEntity<ApiResponse> deleteCandidate(Long id);
 
 }

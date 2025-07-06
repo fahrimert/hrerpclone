@@ -1,100 +1,135 @@
 package com.hrerp.candidatems.service;
 
-import com.hrerp.candidatems.dto.ApiResponse;
-import com.hrerp.candidatems.dto.CandidateRequestDTO;
-import com.hrerp.candidatems.dto.CandidateResponseDTO;
+import com.hrerp.candidatems.dto.*;
+import com.hrerp.candidatems.jobPosting.JobPostingClient;
+import com.hrerp.candidatems.mapper.ApplicationMapper;
 import com.hrerp.candidatems.mapper.CandidateMapper;
+import com.hrerp.candidatems.model.Applications;
 import com.hrerp.candidatems.model.Candidate;
 import com.hrerp.candidatems.model.Connections;
+import com.hrerp.candidatems.repository.ApplicationRepository;
 import com.hrerp.candidatems.repository.CandidateRepository;
+import feign.FeignException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.core.Application;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import javax.management.RuntimeErrorException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class CandidateService implements CandidateServiceImpl {
+public class ApplicationService implements ApplicationServiceImpl {
 
-    private  final CandidateRepository candidateRepository;
-    private  final CandidateMapper candidateMapper;
+    private  final ApplicationRepository applicationRepository;
+    private  final  ApplicationMapper applicationMapper;
+    private final JobPostingClient jobPostingClient;
+    private  final  CandidateRepository candidateRepository;
 
-    public CandidateService(CandidateRepository candidateRepository, CandidateMapper candidateMapper) {
+    public ApplicationService(ApplicationRepository applicationRepository, ApplicationMapper applicationMapper, JobPostingClient jobPostingClient, CandidateRepository candidateRepository) {
+        this.applicationRepository = applicationRepository;
+        this.applicationMapper = applicationMapper;
+        this.jobPostingClient = jobPostingClient;
         this.candidateRepository = candidateRepository;
-        this.candidateMapper = candidateMapper;
-    }
-
-
-    public ResponseEntity<List<CandidateResponseDTO>> findAllCandidates() {
-        return  ResponseEntity.ok(candidateRepository.findAll()
-                .stream()
-                .map(candidateMapper::fromCandidate)
-                .collect(Collectors.toList()));
-    }
-
-    @Transactional
-    public ResponseEntity<ApiResponse> createCandidate(@Valid CandidateRequestDTO candidateRequestDTO) {
-        Candidate candidate =candidateMapper.toCandidate(candidateRequestDTO);
-        candidateRepository.save(candidate);
-return  ResponseEntity.status(HttpStatus.ACCEPTED)
-        .body(ApiResponse.success(candidate.getFirstName()));
     }
 
     @Override
-    public ResponseEntity<CandidateResponseDTO> findCandidateById(Long id) {
-   return  ResponseEntity.ok(candidateMapper.fromCandidate( candidateRepository.findById(id).orElse(null)));
+    public ResponseEntity<ApiResponse> createApplication(@Valid  ApplicationRequestDTO applicationRequestDTO,Long jobPostingId) {
+        Optional<Candidate> candidate = candidateRepository.findById(applicationRequestDTO.getCandidateId());
 
-    }
+        String appliedPositionName = jobPostingClient.getJobTitleForValidationOnAppliedPosition(jobPostingId);
 
-    @Override
-    public ResponseEntity<CandidateResponseDTO> updateCandidateById(Long id,CandidateRequestDTO updatedCandidate) {
-        Candidate candidate = candidateRepository.findById(id).orElse(null);
-         candidate.setFirstName(updatedCandidate.getFirstName());
-        candidate.setAddress(updatedCandidate.getAddress());
-        candidate.setEmail(updatedCandidate.getEmail());
-        candidate.setConnections(
-                Connections.builder()
-                        .linkedinUrl(updatedCandidate.getLinkedin_url())
-                        .instagramUrl(updatedCandidate.getInstagram_url())
-                        .facebookUrl(updatedCandidate.getFacebook_url())
-                        .build());
-        candidate.setCvUrl(updatedCandidate.getCvUrl());
-        candidate.setCreatedAt(updatedCandidate.getCreatedAt());
-
-       ResponseEntity<CandidateResponseDTO> candidateResponse =
-               ResponseEntity.ok( candidateMapper.fromCandidate(candidate));
-    return  candidateResponse;
-    }
-
-    @Override
-    public  ResponseEntity<ApiResponse> deleteCandidate(Long id) {
-        Optional<Candidate> jobPosting = candidateRepository.findById(id);
-
-        if (jobPosting.isPresent()){
-
-            candidateRepository.deleteById(id);
-
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(ApiResponse.error(
-                            "Delete candidate succesfully applied",
-                            null,
-                            HttpStatus.CONFLICT
-                    ));
-
+        boolean hasAlreadyApplied = candidate.get().getApplications().stream().anyMatch(a -> a.getJobPostingId().equals(jobPostingId));
+        if (hasAlreadyApplied){
+            return ResponseEntity.internalServerError().body(ApiResponse.error("Halihazırdaki şirkete başvurunuz değerlendirilmektedir",List.of("error"),HttpStatus.CONFLICT));
 
         }
-        else {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
+        if (candidate.isPresent()) {
+            Candidate presentCandidate = candidate.get();
+            Applications applicationRequest =   applicationMapper.toApplication(applicationRequestDTO,jobPostingId,presentCandidate,appliedPositionName);
+
+            if (applicationRequestDTO.getCandidateId() == null) {
+                throw new IllegalArgumentException("Candidate ID must not be null");
+            }
+            applicationRepository.save(applicationRequest);
+
+            jobPostingClient.incrementApplication(jobPostingId);
+
+            return ResponseEntity.ok(ApiResponse.success(applicationRepository.save(applicationRequest)));
+
+        }
+
+        return ResponseEntity.internalServerError().body(ApiResponse.error("Error",List.of("error"),HttpStatus.INTERNAL_SERVER_ERROR));
+
+    }
+
+    @Override
+    public ResponseEntity getApplicationsBasedOnJobId(Long jobPostingId) {
+        List<Applications> applications = applicationRepository.findAllByJobPostingId(jobPostingId);
+        List<ApplicationsOnSpesificJobPostingDTO> applicationListOnSpesificJobPostingDTO =
+                applications
+                .stream()
+                .map(application -> {
+                    ApplicationsOnSpesificJobPostingDTO applicationListOnSpesificJobPostingDTOSingle = new ApplicationsOnSpesificJobPostingDTO();
+                    applicationListOnSpesificJobPostingDTOSingle.setApplicationId(application.getId());
+                    applicationListOnSpesificJobPostingDTOSingle.setApplicationDate(application.getApplicationDate());
+                    applicationListOnSpesificJobPostingDTOSingle.setCandidateId(application.getCandidate().getId());
+                    applicationListOnSpesificJobPostingDTOSingle.setCandidateFullName(application.getCandidate().getFirstName() + application.getCandidate().getLastName());
+                    applicationListOnSpesificJobPostingDTOSingle.setCandidateEmail(application.getCandidate().getEmail());
+                    return  applicationListOnSpesificJobPostingDTOSingle;
+
+                })
+                .collect(Collectors.toList());
+
+        return  ResponseEntity.ok(applicationListOnSpesificJobPostingDTO);
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse<?>> getApplicationBasedOnJobId(Long jobPostingId,Long candidateId) {
+        try{
+        Optional<Candidate> candidate = candidateRepository.findById(candidateId);
+        Optional<Applications> applications = applicationRepository.findByIdAndJobPostingId(jobPostingId,candidateId);
+
+            if (candidate.isEmpty() || applications.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.CONFLICT)
+                        .body(ApiResponse.error(
+                                "Candidate or Application not found",
+                                null,
+                                HttpStatus.CONFLICT
+                        ));
+            }
+        ApplicationDetailJobPostingDTO applicationDetailJobPostingDTO = new ApplicationDetailJobPostingDTO();
+            applicationDetailJobPostingDTO.setApplicationId(applications.get().getId());
+        applicationDetailJobPostingDTO.setApplicationDate(applications.get().getApplicationDate());
+        applicationDetailJobPostingDTO.setCandidateId(candidate.get().getId());
+        applicationDetailJobPostingDTO.setCandidateEmail(candidate.get().getEmail());
+        applicationDetailJobPostingDTO.setCandidateFullName(candidate.get().getFirstName() + candidate.get().getLastName());
+            applicationDetailJobPostingDTO.setCandidateCity(candidate.get().getAddress() != null ? candidate.get().getAddress().getCity() : null);
+            applicationDetailJobPostingDTO.setCandidateCountry(candidate.get().getAddress() != null ? candidate.get().getAddress().getCountry() : null);
+            applicationDetailJobPostingDTO.setCandidateAddress(candidate.get().getAddress() != null ? candidate.get().getAddress().getAddress() : null);
+            applicationDetailJobPostingDTO.setCoverLetter(applications.get().getCoverLetter());
+            applicationDetailJobPostingDTO.setLinkedinUrl(candidate.get().getConnections().getLinkedinUrl());
+            applicationDetailJobPostingDTO.setLinkedinUrl(candidate.get().getConnections().getInstagramUrl());
+            applicationDetailJobPostingDTO.setLinkedinUrl(candidate.get().getConnections().getFacebookUrl());
+            applicationDetailJobPostingDTO.setPhoneNumber(candidate.get().getConnections() != null ? candidate.get().getConnections().getPhoneNumber() : null);
+            applicationDetailJobPostingDTO.setCvUrl(candidate.get().getCvUrl());
+
+            System.out.println(applicationDetailJobPostingDTO);
+        return   ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(
+                applicationDetailJobPostingDTO
+        ));
+
+        } catch (FeignException e) {
+            return ResponseEntity.status(e.status())
                     .body(ApiResponse.error(
-                            "Candidate does not exists",
+                            "Candidate or application not found: " + e.getMessage(),
                             null,
-                            HttpStatus.CONFLICT
+                            HttpStatus.valueOf(e.status())
                     ));
         }
     }

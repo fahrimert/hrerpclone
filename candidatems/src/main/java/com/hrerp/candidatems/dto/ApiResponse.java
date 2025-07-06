@@ -1,4 +1,4 @@
-package com.hrerpclone.dto;
+package com.hrerp.candidatems.dto;
 
 import org.springframework.http.HttpStatus;
 
