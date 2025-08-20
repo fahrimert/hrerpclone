@@ -1,10 +1,8 @@
-package com.hrerp.dto;
+package com.hrerp.dto.RecruitmentProcessDTOs.InitialDtos;
 
 import com.hrerp.model.RecruitmentProcess;
-import com.hrerp.model.enums.InterviewProcesses;
 import com.hrerp.model.enums.InterviewQuestions;
 import com.hrerp.model.enums.InterviewScore;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,12 +20,10 @@ public class InterviewInitiateResponseDTO {
     private  Long candidateId;
 
 
-    private InterviewProcesses interviewProcesses;
     private  String  interviewRatingQuote;
     private List<InterviewQuestions> interviewQuestions;
     private  String interviewerName;
-    private InterviewScore interviewScore;
-    private RecruitmentProcess process;
+    private Double interviewScore;
 
 
     private Date interviewScheduleTime;

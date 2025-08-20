@@ -1,0 +1,17 @@
+package com.hrerp.model.enums;
+
+public enum OfferStatus {
+    OFFER_PENDING("OFFER_PENDING_RECRUITER"),
+    OFFER_COUNTER_OFFER_CANDIDATE("OFFER_COUNTER_OFFER_CANDIDATE"),
+    OFFER_REJECTED_CANDIDATE("OFFER_REJECTED_CANDIDATE"),
+    OFFER_ACCEPTED_RECRUITER("OFFER_ACCEPTED_RECRUITER"),
+    OFFER_COUNTER_OFFER_INTERNAL("OFFER_COUNTER_OFFER_INTERNAL"),
+    OFFER_REJECTED_RECRUITER("OFFER_REJECTED_RECRUITER");
+    private String displayName;
+
+    OfferStatus(String displayName) {
+        this.displayName = displayName;
+    }
+
+
+}

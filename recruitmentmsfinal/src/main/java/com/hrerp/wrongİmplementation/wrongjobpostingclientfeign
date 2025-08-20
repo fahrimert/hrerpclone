@@ -1,0 +1,14 @@
+   @GetMapping("/api/v1/jobPostings")
+    ResponseEntity<List<com.hrerp.dto.JobPostingResponseDTO>> getJobPostings();
+
+
+
+    @PostMapping("/api/v1/jobPostings")
+    ResponseEntity<JobPostingRequestDTO> createJobPosting(@RequestBody @Valid JobPostingRequestDTO jobPostingRequestDTO);
+
+
+    @PutMapping("/api/v1/jobPostings/{jobPostingId}")
+    ResponseEntity<JobPostingResponseDTO> updateJobPosting(@PathVariable Long jobPostingId,@RequestBody @Valid JobPostingRequestDTO jobPostingRequestDTO);
+
+    @DeleteMapping("/api/v1/jobPostings/{jobPostingId}")
+    void deleteJobPosting(@PathVariable  Long jobPostingId);

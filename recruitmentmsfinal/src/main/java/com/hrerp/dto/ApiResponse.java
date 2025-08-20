@@ -15,6 +15,10 @@ public class ApiResponse<T> {
         return new ApiResponse<>(true, "Success", data, null, HttpStatus.OK.value());
     }
 
+    public static <T> ApiResponse<T> successSpesific(T data,String message) {
+        return new ApiResponse<>(true, message, data, null, HttpStatus.OK.value());
+    }
+
     public static ApiResponse<?> error(String message, List<String> errors, HttpStatus status) {
         return new ApiResponse<>(false, message, null, errors, status.value());
     }

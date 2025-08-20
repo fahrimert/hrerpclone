@@ -1,15 +1,9 @@
-package com.hrerp.mapper;
+package com.hrerp.wrongİmplementation.mapper;
 
 
-import com.hrerp.dto.JobPostingRequestDTO;
-import com.hrerp.dto.JobPostingRequestRecruiterSpesificDTO;
-import com.hrerp.dto.JobPostingResponseRecruiterSpesificDTO;
-import jakarta.validation.Valid;
+import com.hrerp.dto.JobPostingDTOs.JobPostingRequestRecruiterSpesificDTO;
+import com.hrerp.dto.JobPostingDTOs.JobPostingResponseRecruiterSpesificDTO;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-
-import com.hrerp.dto.JobPostingResponseDTO;
 
 @Service
 public class JobPostingMapper {

@@ -1,0 +1,34 @@
+ @GetMapping("/getJobPostings")
+    public ResponseEntity<List<JobPostingResponseDTO>> getAllJobPostings(){
+        return jobPostingClient.getJobPostings();
+    }
+
+    @GetMapping("/getAllApplications/{jobPostingId}")
+    public ResponseEntity<ApiResponse> getAllApplications(@PathVariable  Long jobPostingId){
+        return candidateClient.getAllApplicationsBasedOnJobPosting(jobPostingId);
+    }
+
+    @GetMapping("/getJobPosting/{jobPostingId}")
+    public  ResponseEntity<JobPostingResponseDTO> getJobPostingById(@PathVariable Long jobPostingId){
+        return  jobPostingClient.getJobPostingById(jobPostingId);
+    }
+
+    @GetMapping("/getAllApplications/{jobPostingId}/{applicationId}")
+    public ResponseEntity<ApiResponse> getAllApplications(@PathVariable  Long jobPostingId, @PathVariable Long applicationId){
+        return candidateClient.getSingleApplicationBasedOnJobPosting(jobPostingId,applicationId);
+    }
+
+    @PostMapping("/createJobPosting")
+    public  ResponseEntity<ApiResponse> createJobPosting(@RequestBody @Valid JobPostingRequestDTO jobPostingRequestDTO){
+        return  ResponseEntity.ok(ApiResponse.success(jobPostingClient.createJobPosting(jobPostingRequestDTO)));
+    }
+
+    @PutMapping("/updateJobPosting/{id}")
+    public  ResponseEntity<ApiResponse> updateJobPosting(@PathVariable Long id,@RequestBody @Valid JobPostingRequestDTO jobPostingRequestDTO){
+        return  ResponseEntity.ok(ApiResponse.success(jobPostingClient.updateJobPosting(id,jobPostingRequestDTO)));
+    }
+
+    @DeleteMapping("/{jobPostingId}")
+    public  void deleteJobPosting(@PathVariable Long jobPostingId){
+          jobPostingClient.deleteJobPosting(jobPostingId);
+    }

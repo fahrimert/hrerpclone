@@ -3,21 +3,31 @@ package com.hrerp.candidatems.service;
 import com.hrerp.candidatems.dto.ApiResponse;
 import com.hrerp.candidatems.dto.CandidateRequestDTO;
 import com.hrerp.candidatems.dto.CandidateResponseDTO;
-
+import com.hrerp.candidatems.dto.CounterOfferCandidateDTO;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 public interface CandidateServiceImpl {
 
-    ResponseEntity<List<CandidateResponseDTO>> findAllCandidates();
+    ResponseEntity<ApiResponse> findAllCandidates();
 
-    ResponseEntity<ApiResponse> createCandidate(CandidateRequestDTO candidateRequestDTO);
+    ResponseEntity<ApiResponse> createCandidate(@Valid CandidateRequestDTO candidateRequestDTO);
 
-    ResponseEntity<CandidateResponseDTO> findCandidateById(Long id);
+    ResponseEntity<ApiResponse> findCandidateById(Long id);
 
-    ResponseEntity<CandidateResponseDTO> updateCandidateById(Long id, CandidateRequestDTO updatedCandidate);
+    ResponseEntity<ApiResponse> updateCandidateById(Long id, CandidateRequestDTO updatedCandidate);
 
     ResponseEntity<ApiResponse> deleteCandidate(Long id);
+
+    boolean candidateExistsById(Long id);
+
+    ResponseEntity<ApiResponse> getMyOffers(Long candidateId);
+
+
+    ResponseEntity<ApiResponse> getMyInduvualOffer(Long candidateId);
+
+
+    ResponseEntity<ApiResponse> candidateMakeCounterOffer(CounterOfferCandidateDTO counterOfferDTO , Long candidateId);
+
 
 }

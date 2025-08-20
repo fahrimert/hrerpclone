@@ -12,7 +12,7 @@ public interface JobPostingService {
 
     ResponseEntity<ApiResponse> createJobPosting(JobPostingRequestDTO jobPostingRequestDTO);
 
-    ResponseEntity<JobPostingResponseDTO> findJobById(Long id);
+    ResponseEntity findJobById(Long id);
 
     ResponseEntity<JobPostingResponseDTO> updateJobById(Long id, JobPostingRequestDTO updatedJobPosting);
 
@@ -22,9 +22,10 @@ public interface JobPostingService {
 
     String  getJobTitle(Long jobId);
 
-    ResponseEntity<ApiResponse> getApplication(Long jobId, Long candidateId);
+    ResponseEntity<ApiResponse> getApplicationList(Long jobId);
 
-    ResponseEntity<?> recruiterSpesificUpdate(@Valid JobPostingRequestRecruiterSpesificDTO jobPostingRequestRecruiterSpesificDTO, Long jobPostingId);
+    ResponseEntity<ApiResponse> getApplication(Long jobId, Long candidateId);
+    ResponseEntity<ApiResponse>     recruiterSpesificUpdate(@Valid JobPostingRequestRecruiterSpesificDTO jobPostingRequestRecruiterSpesificDTO, Long jobPostingId);
 
     ResponseEntity<ApiResponse> recruiterSpesificFetch(Long jobPostingId);
 

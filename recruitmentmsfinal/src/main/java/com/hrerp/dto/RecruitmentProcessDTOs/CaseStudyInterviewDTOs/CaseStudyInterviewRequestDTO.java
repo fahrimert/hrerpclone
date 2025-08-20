@@ -1,6 +1,11 @@
-package com.hrerp.dto.RecruitmentProcessDTOs.TechnicalInterviewDTOs;
+package com.hrerp.dto.RecruitmentProcessDTOs.CaseStudyInterviewDTOs;
 
+import com.hrerp.dto.RecruitmentProcessDTOs.CaseStudyInterviewDTOs.EvaluateCaseStudyDTO.EvaluateCaseStudyInterviewDTO;
+import com.hrerp.dto.RecruitmentProcessDTOs.CaseStudyInterviewDTOs.SolutionCaseStudyDTO.SolutionCaseStudyInterviewDTO;
+import com.hrerp.dto.RecruitmentProcessDTOs.InterviewScoreDTO;
+import com.hrerp.dto.RecruitmentProcessDTOs.TechnicalInterviewDTOs.TechnicalKnowledgeScore;
 import com.hrerp.model.enums.InterviewQuestions;
+import com.hrerp.model.enums.InterviewScore;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,25 +19,18 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InterviewTechnicalInterviewRequestDTO {
+
+//case studylerin scorelarını ve scheduled timelarını girmeyi yapamadım garip bi şekilde kuramadım burayı bir türlü
+public class CaseStudyInterviewRequestDTO {
 
     private  String interviewerName;
     private  Long candidateId;
 
-    @Size(min = 5,max = 100)
-    private  String  interviewRatingQuote;
-    private InterviewScoreDTO interviewScore;
+    private  InterviewScoreDTO interviewScore;
+
+    private  String interviewScheduleTime;
 
 
-    String codeExerciseUrl;
-    Integer codeQualityScore;
-    String technicalNotes;
-    String candidateTechnicalBackgroundNote;
-    TechnicalKnowledgeScore technicalKnowledgeScore;
-
-    private List<InterviewQuestions> interviewQuestions;
-
-    private  Date interviewScheduleTime;
     @CreatedDate
     private Date createdAt ;
     private LocalDateTime lastUpdated;

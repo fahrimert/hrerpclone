@@ -12,3 +12,4 @@ public enum JobStatus {
         this.jobStatusName = jobStatusName;
     }
 }
+

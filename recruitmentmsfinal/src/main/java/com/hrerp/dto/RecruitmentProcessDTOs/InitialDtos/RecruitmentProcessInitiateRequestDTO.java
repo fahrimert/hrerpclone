@@ -1,11 +1,5 @@
-package com.hrerp.dto;
+package com.hrerp.dto.RecruitmentProcessDTOs.InitialDtos;
 
-import com.hrerp.model.Interview;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -29,6 +23,7 @@ public class RecruitmentProcessInitiateRequestDTO {
     @NotNull(message = "Initial Interview Request Cant Be Null")
     @NotEmpty(message = "Initial Interview Request Cannot Be Empty")
     private List<InterviewInitiateRequestDTO> interviews;
+
     @CreatedDate
     private Date createdAt ;
     private LocalDateTime lastUpdated;

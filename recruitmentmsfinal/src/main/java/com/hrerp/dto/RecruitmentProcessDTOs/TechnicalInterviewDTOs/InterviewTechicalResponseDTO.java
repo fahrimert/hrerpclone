@@ -1,6 +1,7 @@
-package com.hrerp.dto.RecruitmentProcessDTOs.InitialDtos;
+package com.hrerp.dto.RecruitmentProcessDTOs.TechnicalInterviewDTOs;
 
 import com.hrerp.model.RecruitmentProcess;
+import com.hrerp.model.enums.InterviewProcesses;
 import com.hrerp.model.enums.InterviewQuestions;
 import com.hrerp.model.enums.InterviewScore;
 import jakarta.validation.constraints.Size;
@@ -15,7 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InterviewInitiateResponseDTO {
+public class InterviewTechicalResponseDTO {
     @Size(min = 5,max = 100)
     private  Long candidateId;
 
@@ -23,8 +24,9 @@ public class InterviewInitiateResponseDTO {
     private  String  interviewRatingQuote;
     private List<InterviewQuestions> interviewQuestions;
     private  String interviewerName;
-    private InterviewScore interviewScore;
-    private RecruitmentProcess process;
+    private Double interviewScore;
+    private InterviewProcesses process;
+
 
 
     private Date interviewScheduleTime;

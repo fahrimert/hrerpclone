@@ -1,14 +1,11 @@
-package com.hrerp.dto.RecruitmentProcessDTOs.TechnicalInterviewDTOs;
+package com.hrerp.dto.RecruitmentProcessDTOs.CaseStudyInterviewDTOs;
 
-import lombok.Data;
+import com.hrerp.dto.RecruitmentProcessDTOs.TechnicalInterviewDTOs.TechnicalKnowledgeScore;
 
-public record   TechnicalInterviewDataDTO (
+import java.time.LocalDateTime;
 
-        String codeExerciseUrl,
-        Integer codeQualityScore,
-        String technicalNotes,
-        String candidateTechnicalBackgroundNote,
-        TechnicalKnowledgeScore technicalKnowledgeScore
+public record CaseStudyInterviewDataDTO(
+
 
         ){
 

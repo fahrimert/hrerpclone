@@ -6,6 +6,7 @@ jobms-service:
   url: http://localhost:8083
 
 spring:
+
   application:
     name: candidatems
   datasource:

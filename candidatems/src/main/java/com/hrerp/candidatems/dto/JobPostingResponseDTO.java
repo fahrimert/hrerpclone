@@ -1,12 +1,16 @@
-package com.hrerp.dto;
+package com.hrerp.candidatems.dto;
 
 
+import com.hrerp.candidatems.dto.enums.JobStatus;
+import com.hrerp.candidatems.dto.enums.JobType;
+import com.hrerp.candidatems.dto.enums.Location;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,11 +19,11 @@ public class JobPostingResponseDTO {
     private  String jobTitle;
     private  String jobDescription;
     private  Integer salary;
-    private com.hrerp.dto.enums.JobType jobType;
+    private JobType jobType;
     private List<String> requiredSkillsList;
     private  String department;
-    private com.hrerp.dto.enums.Location location;
-    private com.hrerp.dto.enums.JobStatus jobStatus;
+    private Location location;
+    private JobStatus jobStatus;
     private Date jobPostingDeadline;
 
 }

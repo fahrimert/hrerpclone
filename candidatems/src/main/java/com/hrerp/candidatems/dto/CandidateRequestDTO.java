@@ -2,37 +2,37 @@ package com.hrerp.candidatems.dto;
 
 
 import com.hrerp.candidatems.model.Address;
-import com.hrerp.candidatems.model.Connections;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.validation.constraints.*;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CandidateRequestDTO {
-    private  Long id;
-
+    @NotNull(message = "First name cannot be null")
     private  String firstName;
+    @NotNull(message = "Last name cannot be null")
     private  String lastName;
 
     private Address address;
+    @Email(message = "Email should be valid")
     private  String email;
+    @NotNull
     private  String linkedin_url;
+    @NotNull
     private  String instagram_url;
+    @NotNull
     private  String facebook_url;
+    @NotNull
     private  String phoneNumber;
+    @NotNull
     private  String cvUrl;
-
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private String createdAt ;
 
 
 }

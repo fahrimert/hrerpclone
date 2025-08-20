@@ -1,11 +1,14 @@
 package com.hrerp.jobposting.application.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hrerp.jobposting.application.dto.enums.JobStatus;
 import com.hrerp.jobposting.infrastructure.Client.ApplicationsClient;
 import com.hrerp.jobposting.application.dto.*;
 import com.hrerp.jobposting.infrastructure.mapper.JobPostingMapper;
 import com.hrerp.jobposting.infrastructure.persistence.JobPosting;
 import com.hrerp.jobposting.infrastructure.repository.JobPostingRepository;
+import feign.FeignException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,25 +22,34 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-    public class JobPostingService22 implements  JobPostingService{
+    public class    JobPostingServiceImpl implements  JobPostingService    {
 
         private  final JobPostingRepository jobPostingRepository;
-        private  final JobPostingMapper jobPostingMapper;
+        private JobPostingMapper jobPostingMapper;
         private  final ApplicationsClient applicationsClient;
-        public JobPostingService(JobPostingRepository jobPostingRepository, JobPostingMapper jobPostingMapper, ApplicationsClient applicationsClient) {
-            this.jobPostingRepository = jobPostingRepository;
-            this.jobPostingMapper = jobPostingMapper;
-            this.applicationsClient = applicationsClient;
-        }
 
-        public ResponseEntity<List<JobPostingResponseDTO>> findAllJobPostings() {
-            return  ResponseEntity.ok(jobPostingRepository.findAll()
-                    .stream()
-                            .filter(a -> !a.getPostingStatus().equals(JobStatus.CLOSED))
-                    .map(jobPostingMapper::fromJobPosting)
-                    .collect(Collectors.toList()));
-        }
+    public JobPostingServiceImpl(JobPostingRepository jobPostingRepository, JobPostingMapper jobPostingMapper, ApplicationsClient applicationsClient) {
+        this.jobPostingRepository = jobPostingRepository;
+        this.jobPostingMapper = jobPostingMapper;
+        this.applicationsClient = applicationsClient;
+    }
 
+//servis unit testi için job posting mapper setter
+    public void setJobPostingMapper(JobPostingMapper jobPostingMapper) {
+        this.jobPostingMapper = jobPostingMapper;
+    }
+
+        @Override
+        public ResponseEntity<List<JobPostingResponseDTO>>  findAllJobPostings() {
+                return  ResponseEntity.ok(jobPostingRepository.findAll()
+                        .stream()
+                                .filter(a -> !a.getPostingStatus().equals(JobStatus.CLOSED))
+                        .map(jobPostingMapper::fromJobPosting)
+                        .collect(Collectors.toList()));
+            }
+
+
+        @Override
         @Transactional
         public ResponseEntity<ApiResponse> createJobPosting(@Valid JobPostingRequestDTO jobPostingRequestDTO) {
             JobPosting jobPosting =jobPostingMapper.toJobPosting(jobPostingRequestDTO);
@@ -47,25 +59,40 @@ import java.util.stream.Collectors;
         }
 
         @Override
-        public  ResponseEntity<JobPostingResponseDTO>  findJobById(Long id) {
+        public  ResponseEntity<?>  findJobById(Long id) {
             Optional<JobPosting> jobPosting  = jobPostingRepository.findById(id);
+            if (jobPosting.isEmpty()){
+                return  ResponseEntity.status(HttpStatus.NOT_FOUND) .body(ApiResponse.error(
+                        "Job Posting not found",
+                        null,
+                        HttpStatus.NOT_FOUND
+                ));
+            };
 
+            JobPosting existsJobPosting = jobPosting.get();
+            if (existsJobPosting.getRequiredSkillsList().isEmpty()) {
+              return   ResponseEntity.status(HttpStatus.NOT_FOUND) .body(ApiResponse.error(
+                        "Required Skills Are Empty",
+                        null,
+                        HttpStatus.NOT_FOUND
+                ));
+            }
             //eğer closedsa da görmemesi lazım
 
 
-                // bu kısımda heryerde eğer job posting null gelirse null exception atıyor
+            // bu kısımda heryerde eğer job posting null gelirse null exception atıyor
             // düzeltmeye çalıştım feignle alakalı hata veriyor bu sefer
             // normalde 409 vesaire döndürmesi gerekirken 500 döndürüyor feign yüzünden
 
-            return  ResponseEntity.ok(jobPostingMapper.fromJobPosting( jobPostingRepository.findById(id).orElse(null)));
+            return  ResponseEntity.ok(ApiResponse.success(jobPostingMapper.fromJobPosting( existsJobPosting)));
 
         }
 
         @Override
-        public ResponseEntity<JobPostingResponseDTO> updateJobById(Long id, JobPostingRequestDTO updatedJobPosting) {
-                JobPosting jobPosting = jobPostingRepository.findById(id).orElse(null);
-             jobPosting.setId(updatedJobPosting.getId());
-             jobPosting.setJobTitle(updatedJobPosting.getJobTitle());
+            public ResponseEntity<JobPostingResponseDTO> updateJobById(Long id, JobPostingRequestDTO updatedJobPosting) {
+            JobPosting jobPosting = jobPostingRepository.findById(id).orElse(null);
+            jobPosting.setId(updatedJobPosting.getId());
+            jobPosting.setJobTitle(updatedJobPosting.getJobTitle());
             jobPosting.setJobPostingDescription(updatedJobPosting.getJobDescription());
             jobPosting.setSalary(updatedJobPosting.getSalary());
             jobPosting.setJobType(updatedJobPosting.getJobType());
@@ -78,7 +105,7 @@ import java.util.stream.Collectors;
             jobPosting.setJobPostingDate(new Date());
 
            ResponseEntity<JobPostingResponseDTO> jobPostingResponse = ResponseEntity.ok( jobPostingMapper.fromJobPosting(jobPosting));
-        return  jobPostingResponse;
+           return  jobPostingResponse;
         }
 
         @Override
@@ -108,7 +135,7 @@ import java.util.stream.Collectors;
         }
 
         @Override
-        public ResponseEntity incrementApplication(Long id) {
+        public ResponseEntity   incrementApplication(Long id) {
             Optional <JobPosting> jobPosting = jobPostingRepository.findById(id);
 
             if (jobPosting.isPresent()){
@@ -116,11 +143,8 @@ import java.util.stream.Collectors;
                 Integer currentCount = jobPostingUpdated.getApplicationCount() != null ? jobPostingUpdated.getApplicationCount()  : 0 ;
                 jobPostingUpdated.setApplicationCount(currentCount + 1);
                 JobPosting incrementUpdatedOne =  jobPostingRepository.save(jobPostingUpdated);
-                System.out.println("New count after save: " + incrementUpdatedOne.getApplicationCount());
+                return ResponseEntity.ok(ApiResponse.success("Application Count Incremented"));
 
-               return ResponseEntity.status(HttpStatus.OK)
-                        .body(ResponseEntity.ok(ApiResponse.success(incrementUpdatedOne)
-                        ));
             }
 
             else {
@@ -134,6 +158,8 @@ import java.util.stream.Collectors;
 
         }
 
+
+        //en son bunun integrasyon testinde kaldım
         @Override
         public String getJobTitle(Long jobId) {
             Optional<JobPosting> jobPosting = jobPostingRepository.findById(jobId);
@@ -150,16 +176,20 @@ import java.util.stream.Collectors;
 
         }
 
+
+        @Override
         public ResponseEntity<ApiResponse> getApplicationList(Long jobId) {
+
+
             try{
 
                 Optional<JobPosting> jobPosting = jobPostingRepository.findById(jobId);
                 if (jobPosting.isPresent()){
                     List<ApplicationListDTO>  applicationsList = applicationsClient.getApplications(jobPosting.get().getId());
-                    JobPostingWithApplicationsResponseDTO jobPostingWithApplicationsResponseDTO = new JobPostingWithApplicationsResponseDTO();
+                    JobPostingWithApplicationsResponseDTO   jobPostingWithApplicationsResponseDTO = new JobPostingWithApplicationsResponseDTO();
                     jobPostingWithApplicationsResponseDTO.setJobId(jobPosting.get().getId());
                     jobPostingWithApplicationsResponseDTO.setJobTitle(jobPosting.get().getJobTitle());
-                    jobPostingWithApplicationsResponseDTO.setCity(jobPosting.get().getLocation().getCity());
+                        jobPostingWithApplicationsResponseDTO.setCity(jobPosting.get().getLocation().getCity());
                     jobPostingWithApplicationsResponseDTO.setJobStatus(jobPosting.get().getPostingStatus());
                     jobPostingWithApplicationsResponseDTO.setJobPostingDate(jobPosting.get().getJobPostingDate());
                     jobPostingWithApplicationsResponseDTO.setJobPostingDeadline(jobPosting.get().getJobPostingDeadline());
@@ -181,9 +211,9 @@ import java.util.stream.Collectors;
                 }
             }
                 catch (Exception e){
-                    return ResponseEntity.status(HttpStatus.CONFLICT)
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                             .body(ApiResponse.error(
-                                    "Server Error",
+                                    "Server Error" + e.getMessage() ,
                                     null,
                                     HttpStatus.INTERNAL_SERVER_ERROR
                             ));
@@ -198,7 +228,6 @@ import java.util.stream.Collectors;
             if (jobPosting.isPresent()){
                 ApiResponse<ApplicationsDTO> response = applicationsClient.getApplicationSingle(jobPosting.get().getId(), candidateId);
                 ApplicationsDTO dto = response.getData();
-                System.out.println("ApplicationsDto" + dto);
 
                 JobPostingWithSingleApplicationResponseDTO jobPostingWithApplicationsResponseDTO = new JobPostingWithSingleApplicationResponseDTO();
                 jobPostingWithApplicationsResponseDTO.setJobId(jobPosting.get().getId());
@@ -226,7 +255,11 @@ import java.util.stream.Collectors;
         }
 
     @Override
-    public ResponseEntity<ApiResponse> recruiterSpesificUpdate(JobPostingRequestRecruiterSpesificDTO jobPostingRequestRecruiterSpesificDTO, Long jobPostingId) {
+        public ResponseEntity<ApiResponse> recruiterSpesificUpdate(JobPostingRequestRecruiterSpesificDTO jobPostingRequestRecruiterSpesificDTO, Long jobPostingId) {
+
+try{
+
+
         Optional<JobPosting> jobPosting = jobPostingRepository.findById(jobPostingId);
 
         if (jobPosting.isEmpty()){
@@ -239,34 +272,86 @@ import java.util.stream.Collectors;
         }
 
 
+        JobPosting existJobPosting = jobPosting.get();
+        if (existJobPosting.getInternalJobId() != null){
+            existJobPosting.setInternalJobId(jobPostingRequestRecruiterSpesificDTO.getInternalJobId());
+        }
+        if (jobPostingRequestRecruiterSpesificDTO.getHiringManagerName() != null) {
+            existJobPosting.setHiringManagerName(jobPostingRequestRecruiterSpesificDTO.getHiringManagerName());
+        }
+        if (jobPostingRequestRecruiterSpesificDTO.getInternalHrNote() != null) {
+            existJobPosting.setInternalHrNote(jobPostingRequestRecruiterSpesificDTO.getInternalHrNote());
+        }
+        existJobPosting.setReplacement(jobPostingRequestRecruiterSpesificDTO.isReplacement());
+        if (jobPostingRequestRecruiterSpesificDTO.getInternalPostingDate() != null) {
+            existJobPosting.setInternalPostingDate(jobPostingRequestRecruiterSpesificDTO.getInternalPostingDate());
+        }
+        jobPostingRepository.save(existJobPosting);
 
+        return ResponseEntity.ok(ApiResponse.success(jobPostingMapper.fromJobPostingToRecruiterSpesificFetch(existJobPosting)));
+}
+catch (FeignException e) {
+            String feignBody = e.contentUTF8();
+            String message = feignBody;
 
-        jobPosting.get().setInternalJobId(jobPostingRequestRecruiterSpesificDTO.getInternalJobId());
-        jobPosting.get().setInternalPostingDate(jobPostingRequestRecruiterSpesificDTO.getInternalPostingDate());
-        jobPosting.get().setHiringManagerName(jobPostingRequestRecruiterSpesificDTO.getHiringManagerName());
-        jobPosting.get().setInternalHrNote(jobPostingRequestRecruiterSpesificDTO.getInternalHrNote());
-        jobPosting.get().setReplacement(jobPostingRequestRecruiterSpesificDTO.isReplacement());
-
-        jobPostingRepository.save(jobPosting.get());
-
-        return ResponseEntity.ok(ApiResponse.success(jobPostingMapper.fromJobPostingToRecruiterSpesificFetch(jobPosting.get())));
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(ApiResponse.error(
+                            message,
+                            null,
+                            HttpStatus.CONFLICT
+                    ));
+        }
+catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(ApiResponse.error(
+                            "Feign Client Error: " + e.getMessage(),
+                            null,
+                            HttpStatus.CONFLICT
+                    ));
+        }
     }
 
     @Override
     public ResponseEntity<ApiResponse> recruiterSpesificFetch(Long jobPostingId) {
+        try {
         Optional<JobPosting> jobPosting = jobPostingRepository.findById(jobPostingId);
+
+
 
         if (jobPosting == null){
             return ResponseEntity.status(HttpStatus.NO_CONTENT)
                     .body(ApiResponse.error(
-                            "Job Posting not found ",
+                                "Job Posting not found",
                             null,
                             HttpStatus.NO_CONTENT
                     ));
         }
+
         JobPosting jobPostingGet = jobPosting.get();
 
+
+
         return ResponseEntity.ok(ApiResponse.success(jobPostingMapper.fromJobPostingToRecruiterSpesificFetch(jobPostingGet)));
+        }
+catch (FeignException e) {
+            String feignBody = e.contentUTF8();
+            String message = feignBody;
+
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(ApiResponse.error(
+                            message,
+                            null,
+                            HttpStatus.CONFLICT
+                    ));
+        }
+catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(ApiResponse.error(
+                            "Feign Client Error: " + e.getMessage(),
+                            null,
+                            HttpStatus.CONFLICT
+                    ));
+        }
 
     }
 

@@ -12,20 +12,18 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JobPostingRequestRecruiterSpesificDTO {
+public class    JobPostingRequestRecruiterSpesificDTO {
+
+    @NotNull(message = "Internal Id must not be null")
     private Long internalJobId;
-    @NotNull(message = "Job Description should be present")
-    @NotEmpty(message = "Job Description  should be present")
-    @NotBlank(message = "Job Description should be present")
 
-    @Size(min = 6,max = 50, message = "İnternal Description must be between 6 and 50 characterss")
-    private  String internalDescripton;
-
+    @NotBlank(message = "Hiring manager name cannot be blank")
     private  String hiringManagerName;
     private  boolean isReplacement = false;
     private String replacementFor ;
 
+    @Size(max = 200, message = "HR note can be at most 200 characters")
     private String internalHrNote;
 
-    @CreatedDate
+    @NotNull(message = "Internal Posting Date is required")
     private LocalDate internalPostingDate;}

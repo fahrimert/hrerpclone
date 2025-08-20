@@ -1,8 +1,8 @@
-package com.hrerp.dto;
+package com.hrerp.wrongİmplementation.wrongdto;
 
-import com.hrerp.dto.enums.JobStatus;
-import com.hrerp.dto.enums.JobType;
-import com.hrerp.dto.enums.Location;
+import com.hrerp.wrongİmplementation.wrongenums.JobStatus;
+import com.hrerp.wrongİmplementation.wrongenums.JobType;
+import com.hrerp.wrongİmplementation.wrongenums.Location;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

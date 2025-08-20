@@ -1,6 +1,6 @@
-package com.hrerp.model.enums;
+package com.hrerp.dto.RecruitmentProcessDTOs.TechnicalInterviewDTOs;
 
-public enum InterviewScore {
+public enum TechnicalKnowledgeScore {
 
     BELOW_AVERAGE(
         "BELOW_AVERAGE",
@@ -24,7 +24,7 @@ public enum InterviewScore {
         private  Double max_score;
 
 
-    InterviewScore(String display_name, Double min_score,Double max_score) {
+    TechnicalKnowledgeScore(String display_name, Double min_score, Double max_score) {
         this.display_name = display_name;
         this.min_score = min_score;
         this.max_score = max_score;
@@ -42,8 +42,8 @@ public enum InterviewScore {
         return max_score;
     }
 
-    public  static InterviewScore fromScore(double score){
-        for (InterviewScore value : values()){
+    public  static TechnicalKnowledgeScore fromScore(double score){
+        for (TechnicalKnowledgeScore value : values()){
             if (score >= value.min_score && score <= value.max_score){
                 return  value;
             }

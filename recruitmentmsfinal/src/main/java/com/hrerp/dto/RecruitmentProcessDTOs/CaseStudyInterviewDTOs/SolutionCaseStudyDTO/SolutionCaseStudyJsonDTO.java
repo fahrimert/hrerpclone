@@ -1,5 +1,6 @@
-package com.hrerp.dto.RecruitmentProcessDTOs.CaseStudyInterviewDTOs.InitiateCaseStudyDTO;
+package com.hrerp.dto.RecruitmentProcessDTOs.CaseStudyInterviewDTOs.SolutionCaseStudyDTO;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,9 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InitCaseStudyJsonDTO {
-    private String givenCaseTitle;
-    private String givenCaseContent;
-    private String givenCaseDeadline;
-    private String interviewerName;
+public class SolutionCaseStudyJsonDTO {
+    String caseStudySolutionTitle;
+    String caseStudySolutionDescriptino;
+    String caseStudyScore;
 }

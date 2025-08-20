@@ -37,11 +37,11 @@ public class JobPosting {
 
 
     @Column(name = "job_posting_description",length = 255)
-    @Size(min = 4,max = 30,message = "Description must be between 4 and 15 characters")
+    @Size(min = 4,max = 100,message = "Description must be between 4 and 100 characters")
     private String jobPostingDescription;
 
     @Column(name = "hr_internal_description",length = 255)
-    @Size(min = 4,max = 30,message = "HR Description must be between 4 and 15 characters")
+    @Size(min = 4,max = 30,message = "HR Description must be between 4 and 30 characters")
     private  String internalDescripton;
 
 

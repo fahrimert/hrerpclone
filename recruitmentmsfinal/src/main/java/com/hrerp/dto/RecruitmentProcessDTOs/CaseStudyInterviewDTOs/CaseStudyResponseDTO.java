@@ -1,4 +1,4 @@
-package com.hrerp.dto.RecruitmentProcessDTOs.InitialDtos;
+package com.hrerp.dto.RecruitmentProcessDTOs.CaseStudyInterviewDTOs;
 
 import com.hrerp.model.RecruitmentProcess;
 import com.hrerp.model.enums.InterviewQuestions;
@@ -15,16 +15,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InterviewInitiateResponseDTO {
+public class CaseStudyResponseDTO {
     @Size(min = 5,max = 100)
     private  Long candidateId;
 
-
-    private  String  interviewRatingQuote;
-    private List<InterviewQuestions> interviewQuestions;
     private  String interviewerName;
-    private InterviewScore interviewScore;
-    private RecruitmentProcess process;
 
 
     private Date interviewScheduleTime;

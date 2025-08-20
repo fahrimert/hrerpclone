@@ -1,14 +1,13 @@
-package com.hrerp.dto;
+package com.hrerp.dto.RecruitmentProcessDTOs.InitialDtos;
 
+import com.hrerp.dto.RecruitmentProcessDTOs.InterviewScoreDTO;
 import com.hrerp.model.enums.InterviewProcesses;
 import com.hrerp.model.enums.InterviewQuestions;
-import com.hrerp.model.enums.InterviewScore;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -27,8 +26,18 @@ public class InterviewInitiateRequestDTO {
     private  Long candidateId ;
     private InterviewProcesses interviewProcesses;
 
+    private  String interviewerName;
+    private  String generalImpression;
+    private String candidateTeamCompabilityNote;
+    private List<InterviewQuestions> interviewQuestions;
 
-    private Date interviewScheduleTime;
+    private Boolean locatedInTheSameCity;
+    private Boolean candidateCanWorkInTheOffice;
+    private String candidateCareerGoals;
+    private String salaryExpectation;
+    private String availabilityToStart;
+
+    private String interviewScheduleTime;
     private Date createdAt ;
     private LocalDateTime lastUpdated;
 }

@@ -1,6 +1,8 @@
 package com.hrerp.candidatems.service;
 
 import com.hrerp.candidatems.dto.*;
+import com.hrerp.candidatems.model.ApplicationStatus;
+import com.hrerp.candidatems.model.Candidate;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -14,6 +16,10 @@ public interface ApplicationServiceImpl {
     ResponseEntity  getApplicationsBasedOnJobId(Long jobPostingId);
 
     ResponseEntity<ApiResponse<?>> getApplicationBasedOnJobId(Long jobId,Long candidateId);
+
+    ResponseEntity getTheProperCandidates(Long jobPostingId);
+
+    ResponseEntity<ApiResponse> updateTheCandidateApplicationStatus(Long candidateId, ApplicationStatus applicationStatusRequest);
 //
 //    ResponseEntity<CandidateResponseDTO> findCandidateById(Long id);
 //

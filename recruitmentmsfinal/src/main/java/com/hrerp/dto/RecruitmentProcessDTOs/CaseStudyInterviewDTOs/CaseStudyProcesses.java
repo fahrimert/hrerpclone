@@ -1,17 +1,13 @@
-package com.hrerp.model.enums;
+package com.hrerp.dto.RecruitmentProcessDTOs.CaseStudyInterviewDTOs;
 
-public enum InterviewProcesses {
-    HR_SCREENING("HR_SCREENING"),
-    TECHNICAL_INTERVIEW("TECHNICAL_INTERVIEW"),
-    CASE_PROJECT("CASE_PROJECT"),
-    FINAL_OVERVİEW("FINAL_OVERVİEW"),
-    OFFER("OFFER"),
-    REJECTED("REJECTED"),
-    HIRED("HIRED");
+public enum CaseStudyProcesses {
+    INITIAL("INITIAL"),
+    SOLUTION("SOLUTION"),
+    EVALUATION("EVALUATION");
 
     private String displayName;
 
-    InterviewProcesses(String displayName) {
+    CaseStudyProcesses(String displayName) {
         this.displayName = displayName;
     }
 }

@@ -1,4 +1,4 @@
-package com.hrerp.dto.enums;
+package com.hrerp.candidatems.dto.enums;
 
 import jakarta.persistence.Embeddable;
 import lombok.*;

@@ -8,13 +8,16 @@ import com.hrerp.candidatems.model.Connections;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Service
 public class CandidateMapper {
     public Candidate toCandidate(@Valid CandidateRequestDTO candidateRequestDTO){
+        LocalDateTime ldtFirstCandidate = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedCustom = ldtFirstCandidate.format(formatter);
         return  Candidate.builder()
                 .firstName(candidateRequestDTO.getFirstName())
                 .lastName(candidateRequestDTO.getLastName())
@@ -27,18 +30,20 @@ public class CandidateMapper {
                         .phoneNumber(candidateRequestDTO.getPhoneNumber())
                         .build())
                 .cvUrl(candidateRequestDTO.getCvUrl())
-                .createdAt(LocalDateTime.now())
+                .createdAt(formattedCustom)
                 .build();
     }
 
     public CandidateResponseDTO fromCandidate(Candidate candidate){
+        Connections connections = candidate.getConnections();
         return  new CandidateResponseDTO(
                 candidate.getId(),
                 candidate.getFirstName(),
                 candidate.getLastName(),
                 candidate.getAddress(),
                 candidate.getEmail(),
-                candidate.getConnections().getLinkedinUrl(),
+              candidate.getConnections().getLinkedinUrl(),
+                candidate.getSkills(),
                 candidate.getConnections().getInstagramUrl(),
                 candidate.getConnections().getFacebookUrl(),
                 candidate.getConnections().getPhoneNumber(),

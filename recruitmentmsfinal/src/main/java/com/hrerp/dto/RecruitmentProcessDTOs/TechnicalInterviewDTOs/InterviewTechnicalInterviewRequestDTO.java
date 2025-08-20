@@ -1,7 +1,8 @@
-package com.hrerp.dto.RecruitmentProcessDTOs.InitialDtos;
+package com.hrerp.dto.RecruitmentProcessDTOs.TechnicalInterviewDTOs;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import com.hrerp.dto.RecruitmentProcessDTOs.InterviewScoreDTO;
+import com.hrerp.model.enums.InterviewQuestions;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,17 +15,26 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecruitmentProcessInitiateRequestDTO {
+public class InterviewTechnicalInterviewRequestDTO {
 
-    @NotNull(message = "Candidate Id Cant Be Null")
+    private  String interviewerName;
     private  Long candidateId;
-    @NotNull(message = "Job Posting Id Cant Be Null")
-    private  Long jobPostingId;
-    @NotNull(message = "Initial Interview Request Cant Be Null")
-    @NotEmpty(message = "Initial Interview Request Cannot Be Empty")
-    private List<InterviewInitiateRequestDTO> interviews;
+
+    @Size(min = 5,max = 100)
+    private  String  interviewRatingQuote;
+    private InterviewScoreDTO interviewScore;
+
+
+    String codeExerciseUrl;
+    Integer codeQualityScore;
+    String technicalNotes;
+    String candidateTechnicalBackgroundNote;
+    TechnicalKnowledgeScore technicalKnowledgeScore;
+
+    private List<InterviewQuestions> interviewQuestions;
+
+    private  String interviewScheduleTime;
     @CreatedDate
     private Date createdAt ;
     private LocalDateTime lastUpdated;
-
 }

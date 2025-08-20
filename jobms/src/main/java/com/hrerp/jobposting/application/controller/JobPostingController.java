@@ -1,9 +1,6 @@
 package com.hrerp.jobposting.application.controller;
 
-import com.hrerp.jobposting.application.dto.ApiResponse;
-import com.hrerp.jobposting.application.dto.JobPostingRequestDTO;
-import com.hrerp.jobposting.application.dto.JobPostingRequestRecruiterSpesificDTO;
-import com.hrerp.jobposting.application.dto.JobPostingResponseDTO;
+import com.hrerp.jobposting.application.dto.*;
 import com.hrerp.jobposting.application.service.JobPostingService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -13,39 +10,41 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/jobPostings")
-public class JobPostingController {
+public class    JobPostingController {
 
-    private  final JobPostingService jobPostingService;
+        private  final JobPostingService jobPostingService;
 
-    public JobPostingController(JobPostingService jobPostingService) {
-        this.jobPostingService = jobPostingService;
-    }
-
-
-    @GetMapping
-    public ResponseEntity<List<JobPostingResponseDTO>> getAllJobPostings(){
-        return  jobPostingService.findAllJobPostings();
-    }
-
-    @GetMapping("/{id}")
-    public  ResponseEntity<JobPostingResponseDTO> getJobById(@PathVariable Long id){
-        return  jobPostingService.findJobById(id);
-    }
+        public JobPostingController(JobPostingService    jobPostingService) {
+            this.jobPostingService = jobPostingService;
+        }
 
 
-    @PostMapping
-    @Transactional
-    public ResponseEntity<ApiResponse> createJobPosting(
-            @RequestBody @Valid JobPostingRequestDTO jobPostingRequestDTO
-            ){
-        return  jobPostingService.createJobPosting(jobPostingRequestDTO);
-    }
+        @GetMapping
+        public ResponseEntity<List<JobPostingResponseDTO>> getAllJobPostings(){
+            return  jobPostingService.findAllJobPostings();
+        }
 
-    @PutMapping("/{id}")
+        //sorun olursa burada olur
+        @GetMapping("/{id}")
+        public  ResponseEntity<?> getJobById(@PathVariable Long id){
+            return  jobPostingService.findJobById(id);
+        }
+
+
+        @PostMapping
+        @Transactional
+        public ResponseEntity<ApiResponse> createJobPosting(
+                @RequestBody @Valid JobPostingRequestDTO jobPostingRequestDTO
+                ){
+            return  jobPostingService.createJobPosting(jobPostingRequestDTO);
+        }
+
+        @PutMapping("/{id}")
     @Transactional
     public  ResponseEntity<JobPostingResponseDTO> updateJobPosting(@PathVariable Long id,@RequestBody @Valid JobPostingRequestDTO jobPostingRequestDTO){
         return  jobPostingService.updateJobById(id,jobPostingRequestDTO);
     }
+
 
     @PutMapping("/{id}/incrementApplication")
     @Transactional
@@ -65,7 +64,7 @@ public class JobPostingController {
         return   jobPostingService.getJobTitle(jobId);
     }
 
-
+    //bunun controller unit testinde kaldım testlerde
     @GetMapping("/{jobId}/getApplications")
     @Transactional
     public  ResponseEntity<ApiResponse> getApplicationsBasedOnJob(@PathVariable Long jobId){
@@ -78,12 +77,24 @@ public class JobPostingController {
         return   jobPostingService.getApplication(jobPostingId,candidateId);
     }
 
-    @PutMapping("/{jobPostingId}/recruiterSpesificUpdate")
+            @PutMapping("/{jobPostingId}/recruiterSpesificUpdate")
+        @Transactional
+        public  ResponseEntity<ApiResponse> recruiterSpesificUpdateOnJobPosting(
+                @RequestBody @Valid JobPostingRequestRecruiterSpesificDTO jobPostingRequestRecruiterSpesificDTO ,
+                                                                                   @PathVariable Long jobPostingId){
+            return   jobPostingService.recruiterSpesificUpdate(jobPostingRequestRecruiterSpesificDTO, jobPostingId);
+        }
+
+    @GetMapping("/internal/{jobPostingId}")
     @Transactional
-    public  ResponseEntity<ApiResponse> recruiterSpesificUpdateOnJobPosting(
-            @RequestBody @Valid JobPostingRequestRecruiterSpesificDTO jobPostingRequestRecruiterSpesificDTO ,
-                                                                            @PathVariable Long jobPostingId){
-        return   jobPostingService.recruiterSpesificUpdate(jobPostingRequestRecruiterSpesificDTO, jobPostingId);
+    public   ResponseEntity<ApiResponse> recruiterSpesificFetch(
+            @PathVariable Long jobPostingId){
+        return   jobPostingService.recruiterSpesificFetch( jobPostingId);
+    }
+
+    @GetMapping("/existsById/{id}")
+    public  boolean jobPostingsExistById(@PathVariable Long id){
+        return  jobPostingService.jobPostingExistsById(id);
     }
 
 }

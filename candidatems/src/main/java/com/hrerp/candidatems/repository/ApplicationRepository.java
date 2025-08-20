@@ -16,4 +16,7 @@ public interface ApplicationRepository  extends JpaRepository<Applications,Long>
 
     @Query(value = "SELECT * FROM applications  WHERE job_posting_id = :jobPostingId and candidate_id = :candidateId", nativeQuery = true)
     Optional<Applications> findByIdAndJobPostingId(Long jobPostingId, Long candidateId);
+
+    @Query(value = "SELECT * FROM applications  WHERE candidate_id = :candidateId", nativeQuery = true)
+    Optional<Applications> findByCandidateId(Long candidateId);
 }

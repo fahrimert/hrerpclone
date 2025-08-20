@@ -1,4 +1,4 @@
-package com.hrerp.dto.enums;
+package com.hrerp.wrongİmplementation.wrongenums;
 
 public enum JobType {
     FULL_TIME(

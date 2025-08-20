@@ -1,7 +1,8 @@
-package com.hrerp.jobposting.application.controller.exception;
+package com.hrerp.candidatems.controller.exception;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -62,5 +63,13 @@ public class GlobalExceptionHandler {
         return  new ResponseEntity< >(errorResponse,HttpStatus.BAD_REQUEST);
     }
 
-
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Map<String, String>> handleConstraintViolation(ConstraintViolationException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getConstraintViolations().forEach(v -> {
+            String fieldName = v.getPropertyPath().toString();
+            errors.put(fieldName, v.getMessage());
+        });
+        return ResponseEntity.badRequest().body(errors);
+    }
 }

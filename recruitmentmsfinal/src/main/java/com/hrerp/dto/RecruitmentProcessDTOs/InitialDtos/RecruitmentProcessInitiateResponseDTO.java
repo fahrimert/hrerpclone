@@ -1,9 +1,8 @@
-package com.hrerp.dto;
+package com.hrerp.dto.RecruitmentProcessDTOs.InitialDtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.Date;

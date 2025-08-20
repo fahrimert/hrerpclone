@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    discovery:
+      client:
+        health-indicator:
+          enabled: false
+

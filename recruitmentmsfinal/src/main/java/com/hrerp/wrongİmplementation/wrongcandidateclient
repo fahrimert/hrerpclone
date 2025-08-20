@@ -1,0 +1,5 @@
+   @GetMapping("/api/v1/applications/{jobId}/getApplications")
+    ResponseEntity<ApiResponse> getAllApplicationsBasedOnJobPosting(@PathVariable Long jobId);
+
+    @GetMapping("/api/v1/applications/{jobPostingId}/getApplication/{candidateId}")
+    ResponseEntity<ApiResponse> getSingleApplicationBasedOnJobPosting(@PathVariable  Long jobPostingId, @PathVariable Long candidateId);

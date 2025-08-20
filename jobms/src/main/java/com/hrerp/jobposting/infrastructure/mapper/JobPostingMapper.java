@@ -3,6 +3,7 @@ package com.hrerp.jobposting.infrastructure.mapper;
 
 import com.hrerp.jobposting.application.dto.JobPostingRequestDTO;
 import com.hrerp.jobposting.application.dto.JobPostingResponseDTO;
+import com.hrerp.jobposting.application.dto.JobPostingResponseRecruiterSpesificDTO;
 import com.hrerp.jobposting.infrastructure.persistence.JobPosting;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,19 @@ public class JobPostingMapper {
                 jobPosting.getJobPostingDeadline()
         );
     }
+
+    public JobPostingResponseRecruiterSpesificDTO fromJobPostingToRecruiterSpesificFetch(JobPosting jobPosting){
+        return  new JobPostingResponseRecruiterSpesificDTO(
+                jobPosting.getInternalJobId(),
+                jobPosting.getHiringManagerName(),
+                jobPosting.isReplacement(),
+                jobPosting.getReplacementFor(),
+                jobPosting.getInternalHrNote(),
+                jobPosting.getInternalPostingDate()
+        );
+    }
+
+
 //    public JobPostingWithApplicationsResponseDTO fromJobPostingAndApplications(JobPosting jobPosting , List<ApplicationListDTO> applicationDTOList){
 //        return  new JobPostingWithApplicationsResponseDTO(
 //               jobPosting.getId(),

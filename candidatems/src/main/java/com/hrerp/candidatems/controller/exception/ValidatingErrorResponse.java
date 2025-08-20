@@ -1,4 +1,4 @@
-package com.hrerp.jobposting.application.controller.exception;
+package com.hrerp.candidatems.controller.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

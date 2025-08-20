@@ -25,11 +25,11 @@ public class JobPostingRequestDTO {
     @Size(min = 4,max = 30,message = "Title must be between 4 and 30 characters")
     private  String jobTitle;
 
-    @NotNull(message = "Job Description should be present")
+        @NotNull(message = "Job Description should be present")
     @NotEmpty(message = "Job Description  should be present")
     @NotBlank(message = "Job Description should be present")
 
-    @Size(min = 6,max = 50, message = "Job Description must be between 6 and 50 characterss")
+    @Size(min = 6,max = 100, message = "Job Description must be between 6 and 100 characterss")
     private  String jobDescription;
 
 

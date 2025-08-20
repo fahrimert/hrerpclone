@@ -1,4 +1,4 @@
-package com.hrerp.jobposting.application.controller.exception;
+package com.hrerp.controller.exception;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ValidatingErrorResponse> handleHttpMessageNotReadableException(
+    public ResponseEntity<com.hrerp.controller.exception.ValidatingErrorResponse> handleHttpMessageNotReadableException(
             HttpMessageNotReadableException ex ,
             WebRequest request){
         String errorMessage = "Geçersiz Request Formatı";
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
         }
         Map<String, String> errors = new HashMap<>();
 
-        ValidatingErrorResponse errorResponse = new ValidatingErrorResponse(
+        com.hrerp.controller.exception.ValidatingErrorResponse errorResponse = new com.hrerp.controller.exception.ValidatingErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 new Date(),
                 errorMessage,
