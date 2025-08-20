@@ -1,4 +1,4 @@
-# 📌 HrErp - İşe Alım Portalı
+# HrErp - İşe Alım Portalı
 
 **HrErp**, şirketlerin işe alım süreçlerini yönetmesi için geliştirilmiş **mikroservis tabanlı** bir İnsan Kaynakları çözümüdür.  
 Proje dört ana mikroservis üzerinden çalışır ve iş ilanlarından aday yönetimine kadar tüm süreci kapsar.
@@ -21,7 +21,7 @@ Proje dört ana mikroservis üzerinden çalışır ve iş ilanlarından aday yö
 
 ---
 
-## 🔄 Proje Akışı
+##  Proje Akışı
 
 - **Job Posting (HR)**  
   - HR kullanıcıları yeni iş ilanları oluşturabilir.  
@@ -53,14 +53,14 @@ Proje dört ana mikroservis üzerinden çalışır ve iş ilanlarından aday yö
 
 ---
 
-## 📖 JobPosting Service – Application Katmanı
+##  JobPosting Service – Application Katmanı
 
 JobPosting servisi, HR ve adayların iş ilanlarını yönetmesini ve görüntülemesini sağlar.  
 Servis, aktif ilanları filtreleyerek sunar ve belirli bir iş ilanının detaylarını ID’ye göre getirme işlemlerini destekler.
 
 ---
 
-## 🏗️ JobPosting Model
+##  JobPosting Model
 
 JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
@@ -86,59 +86,59 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-## 🔗 API Endpointleri
+## API Endpointleri
 
-### 🔹 Get All Job Postings
+###  Get All Job Postings
 - **URL:** `/api/v1/jobPostings`  
 - **Method:** `GET`  
 - **Açıklama:** Sistemde yer alan tüm **aktif iş ilanlarını** listeler.  
 
-### 🔹 Get Job Posting By ID
+###  Get Job Posting By ID
 - **URL:** `/api/v1/jobPostings/{id}`  
 - **Method:** `GET`  
 - **Açıklama:** Belirli bir iş ilanını ID’sine göre getirir.  
 
-### 🔹 Create Job Posting
+###  Create Job Posting
 - **URL:** `/api/v1/jobPostings`  
 - **Method:** `POST`  
 - **Açıklama:** Yeni bir iş ilanı oluşturur.  
 
-### 🔹 Update Job Posting
+###  Update Job Posting
 - **URL:** `/api/v1/jobPostings/{id}`  
 - **Method:** `PUT`  
 - **Açıklama:** Mevcut bir iş ilanını günceller.  
 
-### 🔹 Increment Application Count
+###  Increment Application Count
 - **URL:** `/api/v1/jobPostings/{id}/incrementApplication`  
 - **Method:** `PUT`  
 - **Açıklama:** İş ilanına yapılan başvuru sayısını artırır.  
 
-### 🔹 Delete Job Posting
+###  Delete Job Posting
 - **URL:** `/api/v1/jobPostings/{id}`  
 - **Method:** `DELETE`  
 - **Açıklama:** Belirli bir iş ilanını siler.  
 
-### 🔹 Get Job Title
+###  Get Job Title
 - **URL:** `/api/v1/jobPostings/{jobId}/getJobTitle`  
 - **Method:** `GET`  
 - **Açıklama:** Belirli bir iş ilanının başlığını döndürür.  
 
-### 🔹 Get Applications Based on Job
+###  Get Applications Based on Job
 - **URL:** `/api/v1/jobPostings/{jobId}/getApplications`  
 - **Method:** `GET`  
 - **Açıklama:** Belirli bir iş ilanına yapılan tüm başvuruları listeler.  
 
-### 🔹 Get Single Application Based on Job
+###  Get Single Application Based on Job
 - **URL:** `/api/v1/jobPostings/{jobPostingId}/getApplication/{candidateId}`  
 - **Method:** `GET`  
 - **Açıklama:** Belirli bir adayın, belirli bir ilana yaptığı başvuruyu getirir.  
 
-### 🔹 Recruiter Specific Update on Job Posting
+###  Recruiter Specific Update on Job Posting
 - **URL:** `/api/v1/jobPostings/{jobPostingId}/recruiterSpesificUpdate`  
 - **Method:** `PUT`  
 - **Açıklama:** Sadece recruiter’a özel alanları günceller.  
 
-### 🔹 Recruiter Specific Fetch
+###  Recruiter Specific Fetch
 - **URL:** `/api/v1/jobPostings/internal/{jobPostingId}`  
 - **Method:** `GET`  
 - **Açıklama:** Belirli bir iş ilanına ait recruiter’a özel alanları döndürür.  
@@ -164,4 +164,5 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 - Tüm mikroservisler Eureka Service Registry üzerinden haberleşir.  
 
 ---
+
 
