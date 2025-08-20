@@ -5,7 +5,7 @@ Proje dört ana mikroservis üzerinden çalışır ve iş ilanlarından aday yö
 
 ---
 
-## ⚙️ Proje Modülleri
+##  Proje Modülleri
 
 - **JobMS**  
   İş ilanlarının oluşturulması, listelenmesi, güncellenmesi, bunlara ait başvuruların alınması, güncellenmesi ve silinmesi işlemleri yapılır.
@@ -145,7 +145,7 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-## 🛠️ Teknolojiler
+##  Teknolojiler
 
 - Java 17  
 - Spring Boot  
@@ -157,12 +157,13 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-## 📌 Notlar
+##  Notlar
 
 - HR rolü tüm CRUD işlemlerini gerçekleştirebilir.  
 - Candidate rolü yalnızca ilanları görüntüleyebilir ve başvuru yapabilir.  
 - Tüm mikroservisler Eureka Service Registry üzerinden haberleşir.  
 
 ---
+
 
 
