@@ -1116,4 +1116,96 @@ Bu işlem:
 Başarılı işlemde güncellenen teklif detayları response ile döndürülür.  
 Bu sayede şirket ve aday arasındaki maaş müzakereleri resmi olarak yönetilebilir.
 
+# Recruitment API Documentation
+
+Tüm endpointler için **Controller Unit Test**, **Service Test** ve **Integration Test**ler yapılmıştır.  
+Feign client ve proxy tabanlı entegrasyonlar için controller unit testleri yeterli kapsamı sağlamaktadır.  
+
+**Test Araçları:**
+- **Controller Unit Test:** `@WebMvcTest`, `MockMvc`, `@MockitoBean`
+- **Service Test:** `@ExtendWith(MockitoExtension.class)`, `@Mock`, `@InjectMocks`
+- **Integration Test:** `@SpringBootTest`, `@AutoConfigureMockMvc`, `@Transactional`, `MockMvc`
+
+---
+
+## 🔹 Candidate Endpoints
+
+| Method | URL | Açıklama | Test Durumu |
+|--------|-----|----------|-------------|
+| POST | `/api/v1/candidates` | Yeni aday oluştur | Controller Unit Test, Service Test, Integration Test |
+| GET | `/api/v1/candidates/{id}` | Aday detaylarını getir | Controller Unit Test, Service Test, Integration Test |
+| PUT | `/api/v1/candidates/{id}` | Aday bilgilerini güncelle | Controller Unit Test, Service Test, Integration Test |
+| DELETE | `/api/v1/candidates/{id}` | Adayı sil | Controller Unit Test, Service Test |
+| GET | `/api/v1/candidates` | Tüm adayları listele | Controller Unit Test, Integration Test |
+| GET | `/api/v1/candidates/existsById/{id}` | Adayın var olup olmadığını kontrol et | Controller Unit Test |
+| GET | `/api/v1/candidates/{candidateId}/getMyOffers` | Adayın tekliflerini getir | Controller Unit Test, Service Test, Integration Test |
+| GET | `/api/v1/candidates/{offerId}/getInduvualOffer` | Spesifik teklifi getir | Controller Unit Test, Service Test |
+| PUT | `/api/v1/candidates/candidateMakeCounterOffer/{offerId}` | Aday karşı teklif yap | Controller Unit Test, Service Test |
+
+---
+
+## 🔹 Application Endpoints
+
+| Method | URL | Açıklama | Test Durumu |
+|--------|-----|----------|-------------|
+| POST | `/api/v1/applications/createApplication/{jobPostingId}` | İlana başvuru oluştur | Controller Unit Test, Service Test, Integration Test |
+| GET | `/api/v1/applications/{jobId}/getApplications` | İlanın başvurularını getir | Controller Unit Test, Service Test, Integration Test |
+| GET | `/api/v1/applications/{jobPostingId}/getApplication/{candidateId}` | Adayın ilana başvurusunu getir | Controller Unit Test, Service Test, Integration Test |
+| GET | `/api/v1/applications/{jobPostingId}/getTheProperCandidates` | Uygun adayları listele | Controller Unit Test |
+| PUT | `/api/v1/applications/{candidateId}/updateTheCandidateApplicationStatus` | Başvuru durumunu güncelle | Controller Unit Test, Service Test |
+
+---
+
+## 🔹 Job Posting Endpoints
+
+| Method | URL | Açıklama | Test Durumu |
+|--------|-----|----------|-------------|
+| GET | `/api/v1/jobPostings` | Tüm iş ilanlarını listele | Controller Unit Test, Integration Test |
+| GET | `/api/v1/jobPostings/{id}` | İlan detaylarını getir | Controller Unit Test, Integration Test |
+| POST | `/api/v1/jobPostings` | Yeni iş ilanı oluştur | Controller Unit Test, Service Test |
+| PUT | `/api/v1/jobPostings/{id}` | İlan bilgilerini güncelle | Controller Unit Test, Service Test |
+| PUT | `/api/v1/jobPostings/{id}/incrementApplication` | Başvuru sayısını artır | Controller Unit Test, Service Test |
+| DELETE | `/api/v1/jobPostings/{id}` | İlanı sil | Controller Unit Test, Service Test |
+| GET | `/api/v1/jobPostings/{jobId}/getJobTitle` | İlan başlığını getir | Controller Unit Test, Service Test |
+| GET | `/api/v1/jobPostings/{jobId}/getApplications` | İlanın başvurularını getir | Controller Unit Test, Service Test |
+| GET | `/api/v1/jobPostings/{jobPostingId}/getApplication/{candidateId}` | Adayın başvurusunu getir | Controller Unit Test, Service Test |
+| PUT | `/api/v1/jobPostings/{jobPostingId}/recruiterSpesificUpdate` | İlanın recruiter bölümlerini güncelle | Controller Unit Test, Service Test |
+| GET | `/api/v1/jobPostings/internal/{jobPostingId}` | İlanın iç detaylarını getir | Controller Unit Test |
+| GET | `/api/v1/jobPostings/existsById/{id}` | İlanın var olup olmadığını kontrol et | Controller Unit Test |
+
+---
+
+## 🔹 Recruitment Process Endpoints
+
+| Method | URL | Açıklama | Test Durumu |
+|--------|-----|----------|-------------|
+| PUT | `/api/v1/recruitment/{jobPostingId}/recruiterSpesificUpdate` | İlanın recruiter bölümlerini güncelle | Controller Unit Test, Service Test |
+| GET | `/api/v1/recruitment/internal/{jobPostingId}` | İlanın iç detaylarını getir | Controller Unit Test |
+| GET | `/api/v1/recruitment/internal/getTheProperCandidates/{jobPostingId}` | İlan için uygun adayları listele | Controller Unit Test |
+| PUT | `/api/v1/recruitment/internal/updateTheCandidateApplicationStatus/{candidateId}` | Adayın başvuru durumunu güncelle | Controller Unit Test, Service Test |
+| GET | `/api/v1/recruitment/public/getTheRecruitmentProcesses/{candidateId}` | Adayın tüm süreçlerini getir | Controller Unit Test, Service Test, Integration Test |
+| GET | `/api/v1/recruitment/public/getTheInduvualRecruitmentProcess/{candidateId}/{processId}` | Spesifik süreç detaylarını getir | Controller Unit Test, Service Test |
+| POST | `/api/v1/recruitment/internal/initiateRecruitmentProcess` | Yeni işe alım süreci başlat | Controller Unit Test, Service Test |
+| POST | `/api/v1/recruitment/internal/rejectRecruitmentProcess/{processId}` | Süreci reddet | Controller Unit Test, Service Test |
+| POST | `/api/v1/recruitment/internal/{processId}/forwardToTheTechnicalInterviewProcess` | Teknik mülakat aşamasına ilerlet | Controller Unit Test, Service Test |
+| POST | `/api/v1/recruitment/internal/{processId}/forwardToTheCaseStudyInterviewProcess` | Case study aşamasına ilerlet | Controller Unit Test, Service Test |
+| POST | `/api/v1/recruitment/internal/{interviewId}/initiateTheCaseStudyInterview` | Case study mülakatını başlat | Controller Unit Test, Service Test |
+| POST | `/api/v1/recruitment/public/{interviewId}/solveTheCaseStudyInterview` | Case study çözümünü kaydet | Controller Unit Test, Service Test, Integration Test |
+| POST | `/api/v1/recruitment/internal/{interviewId}/evaluateTheCaseStudyInterview` | Case study değerlendirmesini kaydet | Controller Unit Test, Service Test |
+| GET | `/api/v1/recruitment/internal/{jobPostingId}/getCandidateAveragesOnJobPosting` | İlandaki aday ortalamalarını getir | Controller Unit Test, Service Test |
+| POST | `/api/v1/recruitment/internal/changeProcessToFinalOverview/{candidateId}/{processId}` | Süreci final aşamaya taşı | Controller Unit Test, Service Test |
+
+---
+
+## 🔹 Offer Endpoints
+
+| Method | URL | Açıklama | Test Durumu |
+|--------|-----|----------|-------------|
+| POST | `/api/v1/recruitment/internal/createOfferOnSpesificCandidate` | Adaya teklif oluştur | Controller Unit Test, Service Test |
+| GET | `/api/v1/recruitment/getOffer/{offerId}` | Teklif detaylarını getir | Controller Unit Test, Service Test |
+| GET | `/api/v1/recruitment/getOffers/{candidateId}` | Adayın tekliflerini listele | Controller Unit Test, Service Test |
+| GET | `/api/v1/recruitment/getInduvualOfferForInternal/{internalJobId}` | Şirket içi iş ID'sine göre teklifleri getir | Controller Unit Test, Service Test |
+| PUT | `/api/v1/recruitment/candidateMakeCounterOffer/{offerId}` | Aday karşı teklif yap | Controller Unit Test, Service Test |
+| PUT | `/api/v1/recruitment/internalMakeCounterOffer/{offerId}` | Şirket karşı teklif yap | Controller Unit Test, Service Test |
+
 
