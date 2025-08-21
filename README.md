@@ -16,7 +16,7 @@ Proje dört ana mikroservis üzerinden çalışır ve iş ilanlarından aday yö
 - **RecruitmentMSFinal**  
   İşe alım süreçlerinin yönetimi yapılır; başvuruların takibi, aday değerlendirme ve süreç ilerletme bu modülde gerçekleşir.
 
-- **Service Registry**  
+- **Servis Registry**  
   Mikroservislerin merkezi olarak kaydedildiği **Eureka tabanlı servis registry** bulunur.
 
 ---
@@ -47,13 +47,13 @@ Proje dört ana mikroservis üzerinden çalışır ve iş ilanlarından aday yö
   - Case study, skorlar ve proper candidate seçimi yapılabilir.  
   - Adaylar kendi süreçlerini görüntüleyebilir.  
 
-- **Service Registry (Eureka)**  
+- **Servis Registry (Eureka)**  
   - Tüm mikroservisler **Eureka** ile kaydedilmiştir.  
   - Registry `localhost:8761` üzerinde çalışır.  
 
 ---
 
-##  JobPosting Service – Application Katmanı
+##  JobPosting Servis – Application Katmanı
 
 JobPosting servisi, HR ve adayların iş ilanlarını yönetmesini ve görüntülemesini sağlar.  
 Servis, aktif ilanları filtreleyerek sunar ve belirli bir iş ilanının detaylarını ID’ye göre getirme işlemlerini destekler.
@@ -64,7 +64,7 @@ Servis, aktif ilanları filtreleyerek sunar ve belirli bir iş ilanının detayl
 
 JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
-- `id` → Benzersiz kimlik  
+- `id` ,
 - `internalJobId` → Recruitment sürecinde kullanılacak iç ID  
 - `jobTitle` → İş başlığı  
 - `jobPostingDescription` → İş ilanı açıklaması  
@@ -144,13 +144,13 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 - **Açıklama:** Belirli bir iş ilanına ait recruiter’a özel alanları döndürür.  
 
 ---
-# Job Posting API Documentation
+# Job Posting API Dökümantasyonu
 
 ## Endpoints
 
 ---
 
-### 🔹 Get All Job Postings
+###  Get All Job Postings
 - **URL:** `/api/v1/jobPostings`
 - **Method:** `GET`
 - **Açıklama:** Sistemde yer alan tüm aktif iş ilanlarını listeler.
@@ -168,7 +168,7 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-### 🔹 Get Job Posting By ID
+###  Get Job Posting By ID
 - **URL:** `/api/v1/jobPostings/{id}`
 - **Method:** `GET`
 - **Açıklama:** Belirli bir iş ilanını ID’sine göre getirir.
@@ -187,7 +187,7 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-### 🔹 Create Job Posting
+###  Create Job Posting
 - **URL:** `/api/v1/jobPostings`
 - **Method:** `POST`
 - **Açıklama:** Yeni bir iş ilanı oluşturur ve veritabanına kaydeder.
@@ -214,7 +214,7 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-### 🔹 Update Job Posting
+###  Update Job Posting
 - **URL:** `/api/v1/jobPostings/{id}`
 - **Method:** `PUT`
 - **Açıklama:** Mevcut bir iş ilanını ID’ye göre günceller.
@@ -242,7 +242,7 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-### 🔹 Increment Application Count
+###  Increment Application Count
 - **URL:** `/api/v1/jobPostings/{id}/incrementApplication`
 - **Method:** `PUT`
 - **Açıklama:** Belirli bir iş ilanına yapılan başvuru sayısını artırır.
@@ -260,7 +260,7 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-### 🔹 Delete Job Posting
+###  Delete Job Posting
 - **URL:** `/api/v1/jobPostings/{id}`
 - **Method:** `DELETE`
 - **Açıklama:** Belirli bir iş ilanını ID’sine göre siler.
@@ -278,7 +278,7 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-### 🔹 Get Job Title
+###  Get Job Title
 - **URL:** `/api/v1/jobPostings/{jobId}/getJobTitle`
 - **Method:** `GET`
 - **Açıklama:** Belirli bir iş ilanının başlığını ID’sine göre döndürür.
@@ -296,7 +296,7 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-### 🔹 Get Applications Based on Job
+###  Get Applications Based on Job
 - **URL:** `/api/v1/jobPostings/{jobId}/getApplications`
 - **Method:** `GET`
 - **Açıklama:** Belirli bir iş ilanına yapılan başvuruları listeler.
@@ -315,7 +315,7 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-### 🔹 Get Single Application Based on Job
+###  Get Single Application Based on Job
 - **URL:** `/api/v1/jobPostings/{jobPostingId}/getApplication/{candidateId}`
 - **Method:** `GET`
 - **Açıklama:** Belirli bir iş ilanına yapılan tek bir başvuruyu aday ID’si ile döndürür.
@@ -335,7 +335,7 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-### 🔹 Recruiter Specific Update on Job Posting
+###  Recruiter Specific Update on Job Posting
 - **URL:** `/api/v1/jobPostings/{jobPostingId}/recruiterSpesificUpdate`
 - **Method:** `PUT`
 - **Açıklama:** Belirli bir iş ilanında sadece recruiter’a özel alanları günceller.
@@ -359,7 +359,7 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 
 ---
 
-### 🔹 Recruiter Specific Fetch
+###  Recruiter Specific Fetch
 - **URL:** `/api/v1/jobPostings/internal/{jobPostingId}`
 - **Method:** `GET`
 - **Açıklama:** Belirli bir iş ilanına ait recruiter’a özel alanları getirir.
@@ -380,7 +380,7 @@ JobPosting entity’si, veritabanında iş ilanlarını temsil eder.
 **Özet:**  
 - Sadece recruiter veya HR rolü kullanabilir.  
 - İş ilanının genel bilgilerini değil, recruiter’a özel alanları döndürür.
-# Candidate Service API Documentation
+# Candidate Servis API Dökümantasyonu
 
 ## Genel Açıklama
 Candidate servisi, HR ve Candidate rollerinin aday bilgilerini yönetmesini sağlar.  
@@ -395,7 +395,7 @@ Ayrıca Candidate servisi, Applications üzerinden iş ilanlarına yapılan baş
 Candidate entity’si, veritabanında adayları temsil eder.
 
 **Alanlar:**  
-- `id` → Benzersiz kimlik  
+- `id` ,
 - `firstName` → Adayın adı  
 - `lastName` → Adayın soyadı  
 - `address` → Adayın adres bilgileri (city, country, address)  
@@ -441,24 +441,12 @@ Adayın sosyal bağlantı ve iletişim bilgilerini içerir.
 - `facebookUrl` → Facebook profili (opsiyonel)  
 - `phoneNumber` → Telefon numarası (min. 10 karakter)  
 
----
-
-## Kullanım Senaryosu
-**Candidate:**  
-- Sisteme kayıt olur (profil oluşturma)  
-- Kendi profilini güncelleyebilir veya silebilir  
-- JobPosting servisindeki ilanlara başvurabilir (Application üzerinden)
-
-**HR:**  
-- Tüm adayların listesini görüntüleyebilir  
-- Belirli bir adayın detaylarını inceleyebilir  
-- Adayların yaptığı başvuruları görebilir  
 
 ---
 
 ## API Endpoints
 
-### 🔹 Create Application to Job Posting
+###  Create Application to Job Posting
 - **URL:** `/api/v1/applications/createApplication/{jobPostingId}`  
 - **Method:** `POST`  
 - **Açıklama:** Adayın belirtilen iş ilanına başvuru yapmasını sağlar.
@@ -479,19 +467,10 @@ Adayın sosyal bağlantı ve iletişim bilgilerini içerir.
 
 ---
 
-### 🔹 Get All Applications Based on Job Posting
+###  Get All Applications Based on Job Posting
 - **URL:** `/api/v1/applications/{jobId}/getApplications`  
 - **Method:** `GET`  
 - **Açıklama:** Belirtilen iş ilanına yapılan tüm başvuruları listeler.
-
-**Request:**  
-- Path Parametreleri:  
-  - `jobId` → İş ilanının ID’si
-
-**Response:**  
-- `success`, `message`, `data` → Başvuruların listesi  
-- Her başvuru objesi:  
-  - `applicationId`, `applicationDate`, `candidateId`, `candidateFullName`, `candidateEmail`  
 
 **Özet:**  
 - HR veya Recruiter tarafından kullanılır  
@@ -499,7 +478,7 @@ Adayın sosyal bağlantı ve iletişim bilgilerini içerir.
 
 ---
 
-### 🔹 Get Candidate Application Detail by Job Posting
+###  Get Candidate Application Detail by Job Posting
 - **URL:** `/api/v1/applications/{jobId}/candidates/{candidateId}`  
 - **Method:** `GET`  
 - **Açıklama:** Adayın belirli bir iş ilanına yaptığı başvurunun tüm detaylarını getirir.
@@ -510,7 +489,7 @@ Adayın sosyal bağlantı ve iletişim bilgilerini içerir.
 
 ---
 
-### 🔹 Get Proper Candidates
+###  Get Proper Candidates
 - **URL:** `/api/v1/applications/{jobPostingId}/getTheProperCandidates`  
 - **Method:** `GET`  
 - **Açıklama:** İş ilanının gereksinimlerine uygun adayları listeler.
@@ -520,7 +499,7 @@ Adayın sosyal bağlantı ve iletişim bilgilerini içerir.
   - `jobPostingId` → İş ilanı ID’si  
 
 **Response:**  
-- `success`, `message`, `data` → Uygun adayların listesi  
+-  Uygun adayların listesi  
 - Her aday objesi:  
   - `id`, `firstName`, `lastName`, `address`, `email`, `linkedin_url`, `skills`, `instagram_url`, `facebook_url`, `phoneNumber`, `cvUrl`, `createdAt`
 
@@ -530,7 +509,7 @@ Adayın sosyal bağlantı ve iletişim bilgilerini içerir.
 
 ---
 
-### 🔹 Update Candidate’s Application Status
+###  Update Candidate’s Application Status
 - **URL:** `/api/v1/applications/{candidateId}/updateTheCandidateApplicationStatus`  
 - **Method:** `PUT`  
 - **Açıklama:** Adayın başvuru durumunu günceller (örn. PENDING → APPROVED).
@@ -540,7 +519,7 @@ Adayın sosyal bağlantı ve iletişim bilgilerini içerir.
 - Body (JSON): Güncellenmek istenen başvuru durumu
 
 **Response:**  
-- `success`, `message`, `data` → Güncellenmiş başvuru durumu  
+-  Güncellenmiş başvuru durumu  
 
 **Özet:**  
 - HR veya Recruiter tarafından kullanılır  
@@ -548,21 +527,14 @@ Adayın sosyal bağlantı ve iletişim bilgilerini içerir.
 
 ---
 
-### 🔹 Get All Candidates
+###  Get All Candidates
 - **URL:** `/api/v1/candidates`  
 - **Method:** `GET`  
 - **Açıklama:** Sistemdeki tüm adayları listeler.
 
-**Request:** Parametre yok  
-
-**Response:**  
-- `success`, `message`, `data` → Adayların listesi  
-- Her aday objesi:  
-  - `id`, `firstName`, `lastName`, `address`, `email`, `linkedinUrl`, `skills`, `instagramUrl`, `facebookUrl`, `phoneNumber`, `cvUrl`, `createdAt`  
-
 ---
 
-### 🔹 Create Candidate
+###  Create Candidate
 - **URL:** `/api/v1/candidates`  
 - **Method:** `POST`  
 - **Açıklama:** Yeni aday kaydı oluşturur.
@@ -575,7 +547,7 @@ Adayın sosyal bağlantı ve iletişim bilgilerini içerir.
 
 ---
 
-### 🔹 Update Candidate
+###  Update Candidate
 - **URL:** `/api/v1/candidates/{id}`  
 - **Method:** `PUT`  
 - **Açıklama:** Mevcut adayın bilgilerini günceller.
@@ -589,7 +561,7 @@ Adayın sosyal bağlantı ve iletişim bilgilerini içerir.
 
 ---
 
-### 🔹 Delete Candidate
+###  Delete Candidate
 - **URL:** `/api/v1/candidates/{id}`  
 - **Method:** `DELETE`  
 - **Açıklama:** Adayı tamamen siler.
@@ -599,7 +571,7 @@ Adayın sosyal bağlantı ve iletişim bilgilerini içerir.
 
 **Response:**  
 - Standart ApiResponse ile işlem sonucu döner
-# Recruitment Service – API Documentation
+# Recruitment Servis – API Dökümantasyonu
 
 Recruitment servisi, HR ve adaylar arasındaki işe alım sürecini yönetir.  
 Bu servis, **RecruitmentProcess** ve **Interview** yönetimini sağlar.
@@ -612,12 +584,12 @@ Bu servis, **RecruitmentProcess** ve **Interview** yönetimini sağlar.
 
 ---
 
-## Models
+## Modeller
 
 ### RecruitmentProcess
 Adayın işe alım sürecini temsil eder.
 
-- `id` → Benzersiz kimlik  
+- `id` ,
 - `candidateId` → Sürece dahil edilen adayın ID’si  
 - `jobPostingId` → İlgili iş ilanının ID’si  
 - `interviews` → Sürece bağlı mülakatların listesi  
@@ -628,7 +600,7 @@ Adayın işe alım sürecini temsil eder.
 ### Interview
 Aday ile yapılan bir mülakatı temsil eder.
 
-- `id` → Benzersiz kimlik  
+- `id` ,
 - `candidateId` → Görüşülen adayın ID’si  
 - `interviewRatingQuote` → Görüşme hakkındaki yorum  
 - `interviewProcesses` → Görüşmenin türü (enum)  
@@ -643,37 +615,12 @@ Aday ile yapılan bir mülakatı temsil eder.
 - `lastUpdated` → Son güncelleme tarihi  
 
 ### InterviewQuestions
-- `id` → Benzersiz kimlik  
+- `id` ,
 - `questionText` → Soru metni  
 - `candidateAnswer` → Adayın cevabı  
 - `question_score` → Sorunun puanı  
 - `interview` → Bağlı olduğu interview  
 - `createdAt` → Oluşturulma tarihi  
-
----
-
-## Enums
-
-### InterviewProcesses
-- HR_SCREENING  
-- TECHNICAL_INTERVIEW  
-- CASE_PROJECT  
-- FINAL_OVERVIEW  
-- REJECTED  
-
-### InterviewScore
-- BELOW_AVERAGE (0.0 - 2.5)  
-- AVERAGE (2.5 - 5.0)  
-- ABOVE_AVERAGE (5.0 - 7.5)  
-- EXCELLENT (7.5 - 10.0)  
-
-### OfferStatus
-- OFFER_PENDING  
-- OFFER_COUNTER_OFFER_CANDIDATE  
-- OFFER_REJECTED_CANDIDATE  
-- OFFER_ACCEPTED_RECRUITER  
-- OFFER_COUNTER_OFFER_INTERNAL  
-- OFFER_REJECTED_RECRUITER  
 
 ---
 
@@ -802,410 +749,155 @@ Aday ile yapılan bir mülakatı temsil eder.
 - **Response:** `ApiResponse`  
 - **Kullanıcı:** HR/Recruiter/Technical Evaluator  
 
-# API Documentation – Get Candidate Averages on Job Posting
-**Endpoint:** Get Candidate Averages on Job Posting  
-**URL:** `/api/v1/recruitment/internal/{jobPostingId}/getCandidateAveragesOnJobPosting`  
-**Method:** GET  
-**Açıklama:** Belirli bir iş ilanı için tüm adayların tüm mülakat aşamalarındaki puanlarını ve genel ortalama puanlarını getirir.
-
-### Request
-**Path Parametreleri:**
-- `jobPostingId` → Aday puanlarının getirileceği iş ilanının benzersiz ID'si (Positive Long)
-
-### Response
-**Response (JSON – FinalOverviewCandidateDTO[]):**  
-İş ilanına başvuran tüm adayların detaylı puan bilgilerini içeren liste döner.
-
-**FinalOverviewCandidateDTO Alanları:**
-- `candidateResponseDTO` → Adayın kişisel ve iletişim bilgileri
-- `HR_SCREENING` → HR ön değerlendirme puanı
-- `TECHNICAL` → Teknik mülakat puanı
-- `CASE_STUDY` → Case study mülakat puanı
-- `INIT_CASE_STUDY` → Case study başlangıç puanı
-- `EVALUATION_CASE_STUDY` → Case study değerlendirme puanı
-- `AVERAGE_SCORE` → Tüm aşamaların ortalaması alınmış genel puan
-
-**CandidateResponseDTO Alanları:**
-- `id` → Adayın ID'si
-- `firstName` → Adayın adı
-- `lastName` → Adayın soyadı
-- `address` → Adayın adres bilgileri
-- `email` → Adayın e-posta adresi
-- `linkedin_url` → LinkedIn profili URL'si
-- `instagram_url` → Instagram profili URL'si
-- `facebook_url` → Facebook profili URL'si
-- `phoneNumber` → Telefon numarası
-- `cvUrl` → CV dosyası bağlantısı
-- `createdAt` → Oluşturulma tarihi
-
-### Özet
-Bu endpoint sadece HR/Recruiter tarafından kullanılır.  
-Belirli bir iş ilanı için tüm adayların performans analizini yapmak için kullanılır.  
-Bu endpoint:
-1. İlan için tüm işe alım süreçlerini getirir
-2. Her adayın tüm mülakat aşamalarındaki puanlarını çıkarır
-3. Case study sürecindeki INIT ve EVALUATION puanlarını JSON verisinden ayıklar
-4. Tüm puanların ortalamasını hesaplar
-5. Adayın kişisel bilgileriyle birlikte detaylı puan raporu oluşturur
-
-HR ekibi bu rapor sayesinde adayları genel performanslarına göre karşılaştırabilir ve nihai değerlendirme yapabilir.  
-Eğer ilan için hiç aday bulunamazsa boş liste döndürülür.
+### Get Candidate Averages on Job Posting
+- **URL:** `/api/v1/recruitment/internal/{jobPostingId}/getCandidateAveragesOnJobPosting`  
+- **Method:** `GET`  
+- **Açıklama:** Belirli bir iş ilanı için tüm adayların mülakat puanlarını ve ortalama puanlarını getirir.  
+- **Request Body:** Yok  
+- **Response:** `ApiResponse`  
+- **Kullanıcı:** HR / Recruiter  
 
 ---
 
-# API Documentation – Create Offer to Candidate
-**Endpoint:** Create Offer to Candidate  
-**URL:** `/api/v1/recruitment/internal/createOfferOnSpesificCandidate`  
-**Method:** POST  
-**Açıklama:** Belirli bir adaya iş teklifi oluşturur ve teklif sürecini başlatır.
-
-### Request
-**Body (JSON – OfferRequestDTO):**
-- `candidateId` → Teklif yapılacak adayın ID'si (Zorunlu)
-- `internalJobId` → Şirket içi iş ID'si (Zorunlu)
-- `jobPostingId` → İş ilanı ID'si (Zorunlu)
-- `proposedSalary` → Önerilen maaş (Zorunlu, pozitif değer)
-- `offerExpiryDate` → Teklifin son geçerlilik tarihi (Format: yyyy-MM-dd HH:mm)
-- `candidateStartDate` → Adayın işe başlama tarihi (Format: yyyy-MM-dd HH:mm)
-- `createdAt` → Oluşturulma tarihi (İsteğe bağlı, otomatik atanır)
-
-### Response
-**Response (JSON – ApiResponse):**  
-İşlem sonucunu ve oluşturulan teklifin detaylarını içerir.
-
-**Alanlar:**
-- `success` → İşlem başarılı mı? (true | false)
-- `message` → İşlem hakkında bilgi mesajı
-- `data` → Oluşturulan teklifin detayları (OfferResponseDTO)
-
-**OfferResponseDTO Alanları:**
-- `candidateResponseDTO` → Adayın kişisel ve iletişim bilgileri
-- `proposedSalary` → Önerilen maaş
-- `offerExpiryDate` → Teklifin son geçerlilik tarihi
-- `createdAt` → Teklif oluşturulma tarihi
-
-### Özet
-Bu endpoint sadece HR/Recruiter tarafından kullanılır.  
-Bir adaya iş teklifi oluşturmak için kullanılır.  
-Bu işlem:
-1. Aynı aday ve iş ilanı için zaten bir teklif olup olmadığını kontrol eder
-2. Adayın final overview aşamasını geçip geçmediğini kontrol eder
-3. Yeni teklifi OFFER_PENDING durumuyla kaydeder
-4. Adayın kişisel bilgileriyle birlikte teklif detaylarını döndürür
-
-**Önemli Kontroller:**
-- Aynı aday ve iş ilanı için zaten teklif varsa hata döner
-- Aday final overview aşamasını geçmemişse teklif oluşturulamaz
-- Tüm zorunlu alanların gönderilmesi gerekmektedir
-
-Başarılı işlemde teklif detayları ve aday bilgileri response ile döndürülür.
+### Create Offer to Candidate
+- **URL:** `/api/v1/recruitment/internal/createOfferOnSpesificCandidate`  
+- **Method:** `POST`  
+- **Açıklama:** Belirli bir adaya iş teklifi oluşturur ve teklif sürecini başlatır.  
+- **Request Body:** `OfferRequestDTO`  
+- **Response:** `ApiResponse`  
+- **Kullanıcı:** HR / Recruiter  
 
 ---
 
-# API Documentation – Get Individual Offer
-**Endpoint:** Get Individual Offer  
-**URL:** `/api/v1/recruitment/getOffer/{offerId}`  
-**Method:** GET  
-**Açıklama:** Belirli bir teklifin detaylı bilgilerini getirir.
-
-### Request
-**Path Parametreleri:**
-- `offerId` → Detayları getirilecek teklifin benzersiz ID'si
-
-### Response
-**Response (JSON – ApiResponse):**  
-İşlem sonucunu ve teklifin detaylı bilgilerini içerir.
-
-**Alanlar:**
-- `success` → İşlem başarılı mı? (true | false)
-- `message` → İşlem hakkında bilgi mesajı
-- `data` → Teklifin detaylı bilgileri (OfferResponseWhenGetOfferDTO)
-
-**OfferResponseWhenGetOfferDTO Alanları:**
-- `offerStatus` → Teklifin durumu (OFFER_PENDING, OFFER_ACCEPTED, vb.)
-- `proposedSalary` → Önerilen maaş
-- `counterOfferSalaryCandidate` → Adayın karşı teklif maaşı (varsa)
-- `counterOfferDemandsCandidate` → Adayın karşı teklif talepleri (varsa)
-- `offerExpiryDate` → Teklifin son geçerlilik tarihi
-- `createdAt` → Sorgunun yapıldığı zaman
-
-### Özet
-Bu endpoint hem HR/Recruiter hem de Candidate tarafından kullanılabilir.  
-Belirli bir teklifin güncel durumunu ve detaylarını görüntülemek için kullanılır.  
-Bu endpoint:
-1. Belirtilen ID'ye sahip teklifin mevcut olup olmadığını kontrol eder
-2. Teklifin tüm detaylarını (teklif durumu, maaş bilgileri, karşı teklifler, son kullanma tarihi) getirir
-3. Teklifin güncel durumunu gösterir
-
-Teklif bulunamazsa uygun hata mesajı döndürülür.  
-Başarılı işlemde teklifin tüm detayları response ile döndürülür.
+### Get Individual Offer
+- **URL:** `/api/v1/recruitment/getOffer/{offerId}`  
+- **Method:** `GET`  
+- **Açıklama:** Belirli bir teklifin detaylı bilgilerini getirir.  
+- **Request Body:** Yok  
+- **Response:** `ApiResponse`  
+- **Kullanıcı:** HR / Recruiter / Candidate  
 
 ---
 
-# API Documentation – Get Candidate Offers
-**Endpoint:** Get Candidate Offers  
-**URL:** `/api/v1/recruitment/getOffers/{candidateId}`  
-**Method:** GET  
-**Açıklama:** Belirli bir adaya ait tüm iş tekliflerini listelemek için kullanılır.
-
-### Request
-**Path Parametreleri:**
-- `candidateId` → Teklifleri getirilecek adayın benzersiz ID'si
-
-### Response
-**Response (JSON – ApiResponse):**  
-İşlem sonucunu ve adaya ait tüm tekliflerin listesini içerir.
-
-**Alanlar:**
-- `success` → İşlem başarılı mı? (true | false)
-- `message` → İşlem hakkında bilgi mesajı
-- `data` → Adaya ait tekliflerin listesi (OfferResponseWhenGetOfferDTO[])
-
-**OfferResponseWhenGetOfferDTO Alanları:**
-- `offerStatus` → Teklifin durumu (OFFER_PENDING, OFFER_ACCEPTED, vb.)
-- `proposedSalary` → Önerilen maaş
-- `counterOfferSalary` → Adayın karşı teklif maaşı (varsa)
-- `counterOffDemands` → Adayın karşı teklif talepleri (varsa)
-- `offerExpiryDate` → Teklifin son geçerlilik tarihi
-- `candidateStartDate` → Adayın işe başlama tarihi
-
-### Özet
-Bu endpoint hem HR/Recruiter hem de Candidate tarafından kullanılabilir.  
-Bir adaya ait tüm iş tekliflerini görüntülemek için kullanılır.  
-Bu endpoint:
-1. Belirtilen aday ID'sine ait tüm teklifleri getirir
-2. Her teklifin güncel durumunu ve detaylarını listeler
-3. Tekliflerin son kullanma tarihlerini gösterir
-
-Adaya ait hiç teklif bulunamazsa uygun hata mesajı döndürülür.  
-Başarılı işlemde adaya ait tüm tekliflerin detaylı listesi response ile döndürülür.  
-HR bu endpoint ile bir adayın tüm teklif geçmişini görüntüleyebilir, aday ise kendisine yapılan tüm teklifleri takip edebilir.
+### Get Candidate Offers
+- **URL:** `/api/v1/recruitment/getOffers/{candidateId}`  
+- **Method:** `GET`  
+- **Açıklama:** Belirli bir adaya ait tüm iş tekliflerini getirir.  
+- **Request Body:** Yok  
+- **Response:** `ApiResponse`  
+- **Kullanıcı:** HR / Recruiter / Candidate  
 
 ---
 
-# API Documentation – Get Offers by Internal Job ID
-**Endpoint:** Get Offers by Internal Job ID  
-**URL:** `/api/v1/recruitment/getInduvualOfferForInternal/{internalJobId}`  
-**Method:** GET  
-**Açıklama:** Belirli bir şirket içi iş ID'sine ait tüm teklifleri listelemek için kullanılır.
-
-### Request
-**Path Parametreleri:**
-- `internalJobId` → Teklifleri getirilecek şirket içi iş ID'si
-
-### Response
-**Response (JSON – ApiResponse):**  
-İşlem sonucunu ve şirket içi iş ID'sine ait tüm tekliflerin listesini içerir.
-
-**Alanlar:**
-- `success` → İşlem başarılı mı? (true | false)
-- `message` → İşlem hakkında bilgi mesajı
-- `data` → Şirket içi iş ID'sine ait tekliflerin listesi (OfferResponseWhenGetOfferDTO[])
-
-**OfferResponseWhenGetOfferDTO Alanları:**
-- `offerStatus` → Teklifin durumu (OFFER_PENDING, OFFER_ACCEPTED, vb.)
-- `proposedSalary` → Önerilen maaş
-- `counterOfferSalary` → Karşı teklif maaşı (varsa)
-- `counterOffDemands` → Karşı teklif talepleri (varsa)
-- `offerExpiryDate` → Teklifin son geçerlilik tarihi
-- `candidateStartDate` → Adayın işe başlama tarihi
-
-### Özet
-Bu endpoint sadece HR/Recruiter tarafından kullanılır.  
-Belirli bir şirket içi iş ID'si için yapılan tüm teklifleri görüntülemek için kullanılır.  
-Bu endpoint:
-1. Belirtilen şirket içi iş ID'sine ait tüm teklifleri getirir
-2. Her teklifin güncel durumunu ve detaylarını listeler
-3. Aynı pozisyon için yapılan tüm teklifleri bir arada gösterir
-
-Şirket içi iş ID'sine ait hiç teklif bulunamazsa uygun hata mesajı döndürülür.  
-Başarılı işlemde ilgili pozisyona yapılan tüm tekliflerin detaylı listesi response ile döndürülür.  
-HR bu endpoint ile belirli bir pozisyon için yapılan tüm teklifleri ve bunların durumlarını takip edebilir.
+### Get Offers by Internal Job ID
+- **URL:** `/api/v1/recruitment/getInduvualOfferForInternal/{internalJobId}`  
+- **Method:** `GET`  
+- **Açıklama:** Belirli bir şirket içi iş ID’sine ait tüm teklifleri getirir.  
+- **Request Body:** Yok  
+- **Response:** `ApiResponse`  
+- **Kullanıcı:** HR / Recruiter  
 
 ---
 
-# API Documentation – Candidate Make Counter Offer
-**Endpoint:** Candidate Make Counter Offer  
-**URL:** `/api/v1/recruitment/candidateMakeCounterOffer/{offerId}`  
-**Method:** PUT  
-**Açıklama:** Adayın bir iş teklifine karşı teklif (counter offer) yapmasını sağlar.
+### Candidate Make Counter Offer
+- **URL:** `/api/v1/recruitment/candidateMakeCounterOffer/{offerId}`  
+- **Method:** `PUT`  
+- **Açıklama:** Adayın iş teklifine karşı teklif yapmasını sağlar.  
+- **Request Body:** `CounterOfferDTO`  
+- **Response:** `ApiResponse`  
+- **Kullanıcı:** Candidate  
 
-### Request
-**Path Parametreleri:**
-- `offerId` → Karşı teklif yapılacak teklifin benzersiz ID'si
+# Test Dökümantasyonu 
 
-**Body (JSON – CounterOfferDTO):**
-- `offerStatus` → Adayın teklif durum güncellemesi (örn: OFFER_COUNTER_OFFER_CANDIDATE)
-- `counterOfferSalary` → Adayın karşı teklif maaşı (İsteğe bağlı)
-- `counterOfferDemands` → Adayın karşı teklif talepleri (İsteğe bağlı)
-- `role` → Adayın rolü/pozisyonu
-
-### Response
-**Response (JSON – ApiResponse):**  
-İşlem sonucunu ve güncellenen teklifin detaylarını içerir.
-
-**CounterOfferResponseDTO Alanları:**
-- `offerStatus` → Güncellenen teklif durumu
-- `proposedSalary` → Orijinal önerilen maaş
-- `counterOfferSalary` → Adayın karşı teklif maaşı
-- `counterOffDemands` → Adayın karşı teklif talepleri
-- `role` → Adayın rolü/pozisyonu
-- `offerExpiryDate` → Teklifin son geçerlilik tarihi
-- `candidateStartDate` → Adayın işe başlama tarihi
-
-### Özet
-Bu endpoint sadece Candidate tarafından kullanılır.  
-Bir adayın kendisine yapılan iş teklifine karşı teklif yapmasını sağlar.  
-Bu işlem:
-1. Belirtilen teklifin mevcut olup olmadığını kontrol eder
-2. Adayın daha önce karşı teklif yapıp yapmadığını kontrol eder
-3. Teklif durumunu, karşı teklif maaşını ve taleplerini günceller
-
-**Önemli Kontroller:**
-- Teklif bulunamazsa hata döner
-- Aday zaten karşı teklif yapmışsa tekrar yapamaz
-- Karşı teklif maaş ve talepleri isteğe bağlıdır
-
-Başarılı işlemde güncellenen teklif detayları response ile döndürülür.  
-Bu sayede aday, kendisine yapılan teklifi şirketin beklentilerine göre negotiate edebilir.
-
----
-
-# API Documentation – Internal Make Counter Offer
-**Endpoint:** Internal Make Counter Offer  
-**URL:** `/api/v1/recruitment/internalMakeCounterOffer/{offerId}`  
-**Method:** PUT  
-**Açıklama:** HR/Recruiter'ın bir adayın karşı teklifine yanıt olarak şirket içi karşı teklif yapmasını sağlar.
-
-### Request
-**Path Parametreleri:**
-- `offerId` → Karşı teklif yapılacak teklifin benzersiz ID'si
-
-**Body (JSON – CounterOfferDTO):**
-- `offerStatus` → Teklif durum güncellemesi (örn: OFFER_COUNTER_OFFER_INTERNAL)
-- `counterOfferSalary` → Şirketin karşı teklif maaşı (İsteğe bağlı)
-- `counterOfferDemands` → Şirketin karşı teklif talepleri (İsteğe bağlı)
-- `role` → İlgili rol/pozisyon
-
-### Response
-**Response (JSON – ApiResponse):**  
-İşlem sonucunu ve güncellenen teklifin detaylarını içerir.
-
-**CounterOfferResponseDTO Alanları:**
-- `offerStatus` → Güncellenen teklif durumu
-- `proposedSalary` → Orijinal önerilen maaş
-- `counterOfferSalary` → Şirketin karşı teklif maaşı
-- `counterOffDemands` → Şirketin karşı teklif talepleri
-- `role` → İlgili rol/pozisyon
-- `offerExpiryDate` → Teklifin son geçerlilik tarihi
-- `candidateStartDate` → Adayın işe başlama tarihi
-
-### Özet
-Bu endpoint sadece HR/Recruiter tarafından kullanılır.  
-HR/Recruiter'ın bir adayın karşı teklifine yanıt olarak şirket içi karşı teklif yapmasını sağlar.  
-Bu işlem:
-1. Belirtilen teklifin mevcut olup olmadığını kontrol eder
-2. Teklif durumunu, şirketin karşı teklif maaşını ve taleplerini günceller
-3. Şirket içi karşı teklif bilgilerini kaydeder
-
-**Önemli Not:**
-- Karşı teklif maaş ve talepleri isteğe bağlıdır
-- Bu endpoint, adayın karşı teklifine şirketin resmi yanıtını temsil eder
-- Teklif durumu genellikle OFFER_COUNTER_OFFER_INTERNAL olarak güncellenir
-
-Başarılı işlemde güncellenen teklif detayları response ile döndürülür.  
-Bu sayede şirket ve aday arasındaki maaş müzakereleri resmi olarak yönetilebilir.
-
-# Recruitment API Documentation
-
-Tüm endpointler için **Controller Unit Test**, **Service Test** ve **Integration Test**ler yapılmıştır.  
+Tüm endpointler için **Controller Unit Test**, **Servis Test** ve **Integration Test**ler yapılmıştır.  
 Feign client ve proxy tabanlı entegrasyonlar için controller unit testleri yeterli kapsamı sağlamaktadır.  
 
 **Test Araçları:**
 - **Controller Unit Test:** `@WebMvcTest`, `MockMvc`, `@MockitoBean`
-- **Service Test:** `@ExtendWith(MockitoExtension.class)`, `@Mock`, `@InjectMocks`
+- **Servis Test:** `@ExtendWith(MockitoExtension.class)`, `@Mock`, `@InjectMocks`
 - **Integration Test:** `@SpringBootTest`, `@AutoConfigureMockMvc`, `@Transactional`, `MockMvc`
 
 ---
 
-## 🔹 Candidate Endpoints
+##  Candidate Endpoints
 
 | Method | URL | Açıklama | Test Durumu |
 |--------|-----|----------|-------------|
-| POST | `/api/v1/candidates` | Yeni aday oluştur | Controller Unit Test, Service Test, Integration Test |
-| GET | `/api/v1/candidates/{id}` | Aday detaylarını getir | Controller Unit Test, Service Test, Integration Test |
-| PUT | `/api/v1/candidates/{id}` | Aday bilgilerini güncelle | Controller Unit Test, Service Test, Integration Test |
-| DELETE | `/api/v1/candidates/{id}` | Adayı sil | Controller Unit Test, Service Test |
+| POST | `/api/v1/candidates` | Yeni aday oluştur | Controller Unit Test, Servis Test, Integration Test |
+| GET | `/api/v1/candidates/{id}` | Aday detaylarını getir | Controller Unit Test, Servis Test, Integration Test |
+| PUT | `/api/v1/candidates/{id}` | Aday bilgilerini güncelle | Controller Unit Test, Servis Test, Integration Test |
+| DELETE | `/api/v1/candidates/{id}` | Adayı sil | Controller Unit Test, Servis Test |
 | GET | `/api/v1/candidates` | Tüm adayları listele | Controller Unit Test, Integration Test |
 | GET | `/api/v1/candidates/existsById/{id}` | Adayın var olup olmadığını kontrol et | Controller Unit Test |
-| GET | `/api/v1/candidates/{candidateId}/getMyOffers` | Adayın tekliflerini getir | Controller Unit Test, Service Test, Integration Test |
-| GET | `/api/v1/candidates/{offerId}/getInduvualOffer` | Spesifik teklifi getir | Controller Unit Test, Service Test |
-| PUT | `/api/v1/candidates/candidateMakeCounterOffer/{offerId}` | Aday karşı teklif yap | Controller Unit Test, Service Test |
+| GET | `/api/v1/candidates/{candidateId}/getMyOffers` | Adayın tekliflerini getir | Controller Unit Test, Servis Test, Integration Test |
+| GET | `/api/v1/candidates/{offerId}/getInduvualOffer` | Spesifik teklifi getir | Controller Unit Test, Servis Test |
+| PUT | `/api/v1/candidates/candidateMakeCounterOffer/{offerId}` | Aday karşı teklif yap | Controller Unit Test, Servis Test |
 
 ---
 
-## 🔹 Application Endpoints
+##  Application Endpoints
 
 | Method | URL | Açıklama | Test Durumu |
 |--------|-----|----------|-------------|
-| POST | `/api/v1/applications/createApplication/{jobPostingId}` | İlana başvuru oluştur | Controller Unit Test, Service Test, Integration Test |
-| GET | `/api/v1/applications/{jobId}/getApplications` | İlanın başvurularını getir | Controller Unit Test, Service Test, Integration Test |
-| GET | `/api/v1/applications/{jobPostingId}/getApplication/{candidateId}` | Adayın ilana başvurusunu getir | Controller Unit Test, Service Test, Integration Test |
+| POST | `/api/v1/applications/createApplication/{jobPostingId}` | İlana başvuru oluştur | Controller Unit Test, Servis Test, Integration Test |
+| GET | `/api/v1/applications/{jobId}/getApplications` | İlanın başvurularını getir | Controller Unit Test, Servis Test, Integration Test |
+| GET | `/api/v1/applications/{jobPostingId}/getApplication/{candidateId}` | Adayın ilana başvurusunu getir | Controller Unit Test, Servis Test, Integration Test |
 | GET | `/api/v1/applications/{jobPostingId}/getTheProperCandidates` | Uygun adayları listele | Controller Unit Test |
-| PUT | `/api/v1/applications/{candidateId}/updateTheCandidateApplicationStatus` | Başvuru durumunu güncelle | Controller Unit Test, Service Test |
+| PUT | `/api/v1/applications/{candidateId}/updateTheCandidateApplicationStatus` | Başvuru durumunu güncelle | Controller Unit Test, Servis Test |
 
 ---
 
-## 🔹 Job Posting Endpoints
+##  Job Posting Endpoints
 
 | Method | URL | Açıklama | Test Durumu |
 |--------|-----|----------|-------------|
 | GET | `/api/v1/jobPostings` | Tüm iş ilanlarını listele | Controller Unit Test, Integration Test |
 | GET | `/api/v1/jobPostings/{id}` | İlan detaylarını getir | Controller Unit Test, Integration Test |
-| POST | `/api/v1/jobPostings` | Yeni iş ilanı oluştur | Controller Unit Test, Service Test |
-| PUT | `/api/v1/jobPostings/{id}` | İlan bilgilerini güncelle | Controller Unit Test, Service Test |
-| PUT | `/api/v1/jobPostings/{id}/incrementApplication` | Başvuru sayısını artır | Controller Unit Test, Service Test |
-| DELETE | `/api/v1/jobPostings/{id}` | İlanı sil | Controller Unit Test, Service Test |
-| GET | `/api/v1/jobPostings/{jobId}/getJobTitle` | İlan başlığını getir | Controller Unit Test, Service Test |
-| GET | `/api/v1/jobPostings/{jobId}/getApplications` | İlanın başvurularını getir | Controller Unit Test, Service Test |
-| GET | `/api/v1/jobPostings/{jobPostingId}/getApplication/{candidateId}` | Adayın başvurusunu getir | Controller Unit Test, Service Test |
-| PUT | `/api/v1/jobPostings/{jobPostingId}/recruiterSpesificUpdate` | İlanın recruiter bölümlerini güncelle | Controller Unit Test, Service Test |
+| POST | `/api/v1/jobPostings` | Yeni iş ilanı oluştur | Controller Unit Test, Servis Test |
+| PUT | `/api/v1/jobPostings/{id}` | İlan bilgilerini güncelle | Controller Unit Test, Servis Test |
+| PUT | `/api/v1/jobPostings/{id}/incrementApplication` | Başvuru sayısını artır | Controller Unit Test, Servis Test |
+| DELETE | `/api/v1/jobPostings/{id}` | İlanı sil | Controller Unit Test, Servis Test |
+| GET | `/api/v1/jobPostings/{jobId}/getJobTitle` | İlan başlığını getir | Controller Unit Test, Servis Test |
+| GET | `/api/v1/jobPostings/{jobId}/getApplications` | İlanın başvurularını getir | Controller Unit Test, Servis Test |
+| GET | `/api/v1/jobPostings/{jobPostingId}/getApplication/{candidateId}` | Adayın başvurusunu getir | Controller Unit Test, Servis Test |
+| PUT | `/api/v1/jobPostings/{jobPostingId}/recruiterSpesificUpdate` | İlanın recruiter bölümlerini güncelle | Controller Unit Test, Servis Test |
 | GET | `/api/v1/jobPostings/internal/{jobPostingId}` | İlanın iç detaylarını getir | Controller Unit Test |
 | GET | `/api/v1/jobPostings/existsById/{id}` | İlanın var olup olmadığını kontrol et | Controller Unit Test |
 
 ---
 
-## 🔹 Recruitment Process Endpoints
+##  Recruitment Process Endpoints
 
 | Method | URL | Açıklama | Test Durumu |
 |--------|-----|----------|-------------|
-| PUT | `/api/v1/recruitment/{jobPostingId}/recruiterSpesificUpdate` | İlanın recruiter bölümlerini güncelle | Controller Unit Test, Service Test |
+| PUT | `/api/v1/recruitment/{jobPostingId}/recruiterSpesificUpdate` | İlanın recruiter bölümlerini güncelle | Controller Unit Test, Servis Test |
 | GET | `/api/v1/recruitment/internal/{jobPostingId}` | İlanın iç detaylarını getir | Controller Unit Test |
 | GET | `/api/v1/recruitment/internal/getTheProperCandidates/{jobPostingId}` | İlan için uygun adayları listele | Controller Unit Test |
-| PUT | `/api/v1/recruitment/internal/updateTheCandidateApplicationStatus/{candidateId}` | Adayın başvuru durumunu güncelle | Controller Unit Test, Service Test |
-| GET | `/api/v1/recruitment/public/getTheRecruitmentProcesses/{candidateId}` | Adayın tüm süreçlerini getir | Controller Unit Test, Service Test, Integration Test |
-| GET | `/api/v1/recruitment/public/getTheInduvualRecruitmentProcess/{candidateId}/{processId}` | Spesifik süreç detaylarını getir | Controller Unit Test, Service Test |
-| POST | `/api/v1/recruitment/internal/initiateRecruitmentProcess` | Yeni işe alım süreci başlat | Controller Unit Test, Service Test |
-| POST | `/api/v1/recruitment/internal/rejectRecruitmentProcess/{processId}` | Süreci reddet | Controller Unit Test, Service Test |
-| POST | `/api/v1/recruitment/internal/{processId}/forwardToTheTechnicalInterviewProcess` | Teknik mülakat aşamasına ilerlet | Controller Unit Test, Service Test |
-| POST | `/api/v1/recruitment/internal/{processId}/forwardToTheCaseStudyInterviewProcess` | Case study aşamasına ilerlet | Controller Unit Test, Service Test |
-| POST | `/api/v1/recruitment/internal/{interviewId}/initiateTheCaseStudyInterview` | Case study mülakatını başlat | Controller Unit Test, Service Test |
-| POST | `/api/v1/recruitment/public/{interviewId}/solveTheCaseStudyInterview` | Case study çözümünü kaydet | Controller Unit Test, Service Test, Integration Test |
-| POST | `/api/v1/recruitment/internal/{interviewId}/evaluateTheCaseStudyInterview` | Case study değerlendirmesini kaydet | Controller Unit Test, Service Test |
-| GET | `/api/v1/recruitment/internal/{jobPostingId}/getCandidateAveragesOnJobPosting` | İlandaki aday ortalamalarını getir | Controller Unit Test, Service Test |
-| POST | `/api/v1/recruitment/internal/changeProcessToFinalOverview/{candidateId}/{processId}` | Süreci final aşamaya taşı | Controller Unit Test, Service Test |
+| PUT | `/api/v1/recruitment/internal/updateTheCandidateApplicationStatus/{candidateId}` | Adayın başvuru durumunu güncelle | Controller Unit Test, Servis Test |
+| GET | `/api/v1/recruitment/public/getTheRecruitmentProcesses/{candidateId}` | Adayın tüm süreçlerini getir | Controller Unit Test, Servis Test, Integration Test |
+| GET | `/api/v1/recruitment/public/getTheInduvualRecruitmentProcess/{candidateId}/{processId}` | Spesifik süreç detaylarını getir | Controller Unit Test, Servis Test |
+| POST | `/api/v1/recruitment/internal/initiateRecruitmentProcess` | Yeni işe alım süreci başlat | Controller Unit Test, Servis Test |
+| POST | `/api/v1/recruitment/internal/rejectRecruitmentProcess/{processId}` | Süreci reddet | Controller Unit Test, Servis Test |
+| POST | `/api/v1/recruitment/internal/{processId}/forwardToTheTechnicalInterviewProcess` | Teknik mülakat aşamasına ilerlet | Controller Unit Test, Servis Test |
+| POST | `/api/v1/recruitment/internal/{processId}/forwardToTheCaseStudyInterviewProcess` | Case study aşamasına ilerlet | Controller Unit Test, Servis Test |
+| POST | `/api/v1/recruitment/internal/{interviewId}/initiateTheCaseStudyInterview` | Case study mülakatını başlat | Controller Unit Test, Servis Test |
+| POST | `/api/v1/recruitment/public/{interviewId}/solveTheCaseStudyInterview` | Case study çözümünü kaydet | Controller Unit Test, Servis Test, Integration Test |
+| POST | `/api/v1/recruitment/internal/{interviewId}/evaluateTheCaseStudyInterview` | Case study değerlendirmesini kaydet | Controller Unit Test, Servis Test |
+| GET | `/api/v1/recruitment/internal/{jobPostingId}/getCandidateAveragesOnJobPosting` | İlandaki aday ortalamalarını getir | Controller Unit Test, Servis Test |
+| POST | `/api/v1/recruitment/internal/changeProcessToFinalOverview/{candidateId}/{processId}` | Süreci final aşamaya taşı | Controller Unit Test, Servis Test |
 
 ---
 
-## 🔹 Offer Endpoints
+##  Offer Endpoints
 
 | Method | URL | Açıklama | Test Durumu |
 |--------|-----|----------|-------------|
-| POST | `/api/v1/recruitment/internal/createOfferOnSpesificCandidate` | Adaya teklif oluştur | Controller Unit Test, Service Test |
-| GET | `/api/v1/recruitment/getOffer/{offerId}` | Teklif detaylarını getir | Controller Unit Test, Service Test |
-| GET | `/api/v1/recruitment/getOffers/{candidateId}` | Adayın tekliflerini listele | Controller Unit Test, Service Test |
-| GET | `/api/v1/recruitment/getInduvualOfferForInternal/{internalJobId}` | Şirket içi iş ID'sine göre teklifleri getir | Controller Unit Test, Service Test |
-| PUT | `/api/v1/recruitment/candidateMakeCounterOffer/{offerId}` | Aday karşı teklif yap | Controller Unit Test, Service Test |
-| PUT | `/api/v1/recruitment/internalMakeCounterOffer/{offerId}` | Şirket karşı teklif yap | Controller Unit Test, Service Test |
+| POST | `/api/v1/recruitment/internal/createOfferOnSpesificCandidate` | Adaya teklif oluştur | Controller Unit Test, Servis Test |
+| GET | `/api/v1/recruitment/getOffer/{offerId}` | Teklif detaylarını getir | Controller Unit Test, Servis Test |
+| GET | `/api/v1/recruitment/getOffers/{candidateId}` | Adayın tekliflerini listele | Controller Unit Test, Servis Test |
+| GET | `/api/v1/recruitment/getInduvualOfferForInternal/{internalJobId}` | Şirket içi iş ID'sine göre teklifleri getir | Controller Unit Test, Servis Test |
+| PUT | `/api/v1/recruitment/candidateMakeCounterOffer/{offerId}` | Aday karşı teklif yap | Controller Unit Test, Servis Test |
+| PUT | `/api/v1/recruitment/internalMakeCounterOffer/{offerId}` | Şirket karşı teklif yap | Controller Unit Test, Servis Test |
+
 
 
